@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitara Hospitality — Curated Stays Across India</title>
+<meta name="description" content="Nitara Hospitality curates heritage hotels and boutique resorts across India for travellers and travel agents — booked over WhatsApp. Jaisalmer, Shimla, Goa, Jim Corbett, Manali, Jaipur and more.">
+<meta property="og:title" content="Nitara Hospitality — Curated Stays Across India">
+<meta property="og:description" content="Heritage hotels and boutique resorts across India, booked over WhatsApp. For travellers and travel agents.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#141C2B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23141C2B'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Georgia,serif' fill='%23D8B87D' text-anchor='middle'%3EN%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": "Nitara Hospitality",
+  "url": "https://nitarahospitality.com",
+  "telephone": "+91-99900-04519",
+  "address": {"@type": "PostalAddress", "addressLocality": "New Delhi", "addressCountry": "IN"},
+  "sameAs": ["https://instagram.com/nitarahospitality"]
+}
+</script>
+<style>
+  :root{
+    --ivory:#F5EFE2;
+    --ivory-2:#EDE4D0;
+    --night:#141C2B;
+    --night-2:#1C2740;
+    --gold:#BD9257;
+    --gold-soft:#D8B87D;
+    --rust:#8A3B29;
+    --ink:#221F1A;
+    --line: rgba(34,31,26,0.18);
+    --line-dark: rgba(216,184,125,0.28);
+    --ease: cubic-bezier(.16,.8,.24,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--gold); color:var(--night); }
+  h1,h2,h3,.serif{ font-family:'Cormorant Garamond', serif; font-weight:500; letter-spacing:0.01em; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--rust);
+  }
+  .eyebrow.on-dark{ color:var(--gold-soft); }
+  a{ color:inherit; text-decoration:none; }
+  img{ display:block; width:100%; height:100%; object-fit:cover; background:linear-gradient(135deg, var(--ivory-2), var(--line)); }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* ---------- SCROLL PROGRESS ---------- */
+  #progress{
+    position:fixed; top:0; left:0; height:2px; background:var(--gold); z-index:300; width:0%;
+    transition:width .1s linear;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-stagger > *{ opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal-stagger.in > *{ opacity:1; transform:translateY(0); }
+  .reveal-stagger.in > *:nth-child(1){ transition-delay:.03s; }
+  .reveal-stagger.in > *:nth-child(2){ transition-delay:.09s; }
+  .reveal-stagger.in > *:nth-child(3){ transition-delay:.15s; }
+  .reveal-stagger.in > *:nth-child(4){ transition-delay:.21s; }
+  .reveal-stagger.in > *:nth-child(5){ transition-delay:.27s; }
+  .reveal-stagger.in > *:nth-child(6){ transition-delay:.33s; }
+  .reveal-stagger.in > *:nth-child(7){ transition-delay:.39s; }
+  .reveal-stagger.in > *:nth-child(8){ transition-delay:.45s; }
+  .reveal-stagger.in > *:nth-child(9){ transition-delay:.51s; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 5vw;
+    transition: background 0.4s ease, padding 0.4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.solid{
+    background:rgba(20,28,43,0.92);
+    backdrop-filter:blur(10px);
+    padding:12px 5vw;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand img{ width:38px; height:38px; border-radius:50%; object-fit:cover; border:1px solid var(--gold); }
+  .brand-text{ line-height:1.05; }
+  .brand-text .n1{ font-family:'Cormorant Garamond', serif; font-size:19px; letter-spacing:0.06em; color:var(--ivory); }
+  .brand-text .n2{ font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:0.22em; color:var(--gold-soft); text-transform:uppercase; }
+  nav ul{ display:flex; gap:34px; list-style:none; }
+  nav a{ font-size:13px; letter-spacing:0.04em; color:var(--ivory); opacity:0.85; position:relative; padding-bottom:4px;}
+  nav a:hover{ opacity:1; }
+  nav a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold); transition:width .3s; }
+  nav a:hover::after{ width:100%; }
+  .nav-cta{
+    border:1px solid var(--gold-soft); padding:9px 18px; border-radius:2px;
+    font-size:12px; letter-spacing:0.06em; color:var(--gold-soft) !important; white-space:nowrap;
+    transition:background .3s, color .3s, transform .3s;
+  }
+  .nav-cta:hover{ background:var(--gold-soft); color:var(--night) !important; transform:translateY(-1px); }
+  .nav-right{ display:flex; align-items:center; gap:18px; }
+  .burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:6px; z-index:210; }
+  .burger span{ width:22px; height:1.5px; background:var(--ivory); display:block; transition:transform .3s, opacity .3s; }
+  .burger.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .burger.open span:nth-child(2){ opacity:0; }
+  .burger.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-panel{
+    position:fixed; inset:0; background:var(--night); z-index:150;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px;
+    transform:translateY(-100%); transition:transform .5s var(--ease);
+  }
+  .mobile-panel.open{ transform:translateY(0); }
+  .mobile-panel a{ font-family:'Cormorant Garamond', serif; font-size:30px; color:var(--ivory); }
+  .mobile-panel .btn{ margin-top:10px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; height:100svh; min-height:640px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; color:var(--ivory); overflow:hidden;
+    background:var(--night);
+  }
+  .hero-bg{ position:absolute; inset:0; will-change:transform; }
+  .hero-bg img{ filter:saturate(1.08) brightness(0.6); transform:scale(1.1); }
+  .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,28,43,0.6) 0%, rgba(20,28,43,0.32) 45%, rgba(20,28,43,0.9) 100%);
+  }
+  .hero-mono{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    font-family:'Cormorant Garamond', serif; font-size:min(60vw,780px); font-weight:500;
+    color:rgba(216,184,125,0.055); pointer-events:none; z-index:1; line-height:1;
+  }
+  .hero-content{ position:relative; z-index:2; max-width:820px; padding:0 24px; }
+  .hero-content .eyebrow{ margin-bottom:22px; letter-spacing:0.32em; opacity:0; animation:riseIn .9s var(--ease) .15s forwards; }
+  .hero-content h1{
+    font-size:clamp(38px, 6.4vw, 78px); line-height:1.06; font-weight:500;
+    text-shadow:0 2px 24px rgba(0,0,0,0.35);
+  }
+  .hero-content h1 .line{ display:block; overflow:hidden; }
+  .hero-content h1 .line span{ display:block; opacity:0; transform:translateY(110%); animation:riseIn .9s var(--ease) forwards; }
+  .hero-content h1 .line:nth-child(1) span{ animation-delay:.28s; }
+  .hero-content h1 .line:nth-child(2) span{ animation-delay:.4s; }
+  .hero-content h1 em{ font-style:italic; color:var(--gold-soft); }
+  .hero-content p{
+    margin:26px auto 0; max-width:560px; font-size:16px; line-height:1.7;
+    color:rgba(245,239,226,0.82); font-weight:300;
+    opacity:0; animation:riseIn .9s var(--ease) .58s forwards;
+  }
+  .hero-ctas{ margin-top:38px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+    opacity:0; animation:riseIn .9s var(--ease) .72s forwards;
+  }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(18px);} to{ opacity:1; transform:translateY(0);} }
+
+  .btn{
+    padding:14px 30px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    border-radius:2px; display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:1px solid transparent;
+    transition:transform .3s var(--ease), background .3s, box-shadow .3s;
+  }
+  .btn-gold{ background:var(--gold); color:var(--night); font-weight:500; }
+  .btn-gold:hover{ background:var(--gold-soft); transform:translateY(-2px); box-shadow:0 12px 24px -12px rgba(189,146,87,0.6); }
+  .btn-ghost{ border-color:rgba(245,239,226,0.5); color:var(--ivory); }
+  .btn-ghost:hover{ border-color:var(--ivory); background:rgba(245,239,226,0.08); transform:translateY(-2px); }
+
+  .scroll-cue{
+    position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.2em; color:rgba(245,239,226,0.6);
+    opacity:0; animation:riseIn 1s var(--ease) 1s forwards;
+  }
+  .scroll-cue .line-anim{ width:1px; height:34px; background:linear-gradient(180deg, rgba(245,239,226,0.7), transparent); animation:pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  /* ---------- TICKER ---------- */
+  .ticker-wrap{
+    background:var(--night); border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark);
+    overflow:hidden; padding:16px 0; position:relative;
+  }
+  .ticker{ display:flex; gap:40px; white-space:nowrap; animation:scroll 38s linear infinite; width:max-content; }
+  .ticker span{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.18em; color:var(--gold-soft);
+    text-transform:uppercase; display:flex; align-items:center; gap:40px;
+  }
+  .ticker span::after{ content:'✦'; color:var(--rust); font-size:9px; margin-left:40px; }
+  @keyframes scroll{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* ---------- STATS ---------- */
+  .stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .stat{ background:var(--ivory); padding:34px 18px; text-align:center; }
+  .stat .num{ font-family:'Cormorant Garamond', serif; font-size:44px; color:var(--rust); line-height:1; }
+  .stat .lbl{ margin-top:8px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(34,31,26,0.55); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:110px 6vw; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:64px; }
+  .section-head .eyebrow{ margin-bottom:16px; }
+  .section-head h2{ font-size:clamp(30px,4vw,48px); line-height:1.12; }
+  .section-head p{ margin-top:18px; font-size:15.5px; line-height:1.75; color:rgba(34,31,26,0.68); max-width:520px; }
+  .on-dark .section-head p{ color:rgba(245,239,226,0.68); }
+  .on-dark .section-head h2{ color:var(--ivory); }
+
+  /* ---------- DESTINATIONS / LUGGAGE TAGS ---------- */
+  .tag-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:28px 26px;
+  }
+  .tag{
+    position:relative; background:var(--ivory-2);
+    border:1px solid var(--line); border-radius:3px;
+    padding:14px 14px 20px; transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+    box-shadow:0 1px 0 rgba(34,31,26,0.05);
+  }
+  .tag:nth-child(4n+1){ --r:-1.4deg; }
+  .tag:nth-child(4n+2){ --r:1.1deg; }
+  .tag:nth-child(4n+3){ --r:-0.8deg; }
+  .tag:nth-child(4n+4){ --r:1.6deg; }
+  .tag{ transform:rotate(var(--r,0deg)); }
+  .tag:hover{ transform:translateY(-8px) rotate(0deg) scale(1.015); box-shadow:0 26px 44px -18px rgba(34,31,26,0.38); }
+  .tag-hole{
+    position:absolute; top:14px; left:14px; width:14px; height:14px; border-radius:50%;
+    background:var(--ivory); border:1.5px solid var(--rust); z-index:3;
+    box-shadow:inset 0 0 0 3px var(--ivory-2);
+  }
+  .tag-photo{
+    width:100%; aspect-ratio:4/5; overflow:hidden; border-radius:2px; position:relative;
+    border:1px solid var(--line);
+  }
+  .tag-photo img{ transition:transform .7s var(--ease); }
+  .tag:hover .tag-photo img{ transform:scale(1.09); }
+  .tag-photo::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(20,16,10,0.55) 100%);
+  }
+  .tag-code{
+    position:absolute; bottom:8px; left:8px; z-index:3;
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:0.14em;
+    color:var(--ivory); background:rgba(20,28,43,0.55); padding:3px 7px; border-radius:2px;
+    border:1px solid rgba(245,239,226,0.3);
+  }
+  .tag-dash{ border-top:1px dashed var(--line); margin:14px 0 10px; }
+  .tag h3{ font-size:22px; }
+  .tag p{ font-size:12.5px; line-height:1.55; color:rgba(34,31,26,0.62); margin-top:6px; }
+  .tag.featured{ grid-column:span 2; grid-row:span 1; }
+  .tag.featured .tag-photo{ aspect-ratio:16/9; }
+  .tag.featured h3{ font-size:26px; }
+
+  /* ---------- PARTNERS (dark) ---------- */
+  .partners{ background:var(--night); color:var(--ivory); }
+  .partner-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-dark); border:1px solid var(--line-dark); }
+  .partner{
+    background:var(--night); padding:0; position:relative; min-height:360px;
+    display:flex; flex-direction:column; overflow:hidden;
+    transition:background .4s;
+  }
+  .partner:hover{ background:var(--night-2); }
+  .partner .p-photo{ width:100%; aspect-ratio:16/10; overflow:hidden; position:relative; }
+  .partner .p-photo img{ transition:transform .7s var(--ease); }
+  .partner:hover .p-photo img{ transform:scale(1.08); }
+  .partner .p-body{ padding:26px 26px 30px; flex:1; display:flex; flex-direction:column; justify-content:space-between; }
+  .partner .stamp{
+    position:absolute; top:16px; right:16px; width:54px; height:54px; border-radius:50%;
+    border:1px solid var(--gold-soft); display:flex; align-items:center; justify-content:center;
+    transform:rotate(-10deg); opacity:0.92; background:rgba(20,28,43,0.5); backdrop-filter:blur(2px);
+  }
+  .partner .stamp span{ font-family:'IBM Plex Mono', monospace; font-size:7.5px; letter-spacing:0.09em; color:var(--gold-soft); text-align:center; line-height:1.3; white-space:pre-line; }
+  .partner h3{ font-size:22px; color:var(--ivory); margin-bottom:8px; }
+  .partner p{ font-size:13px; line-height:1.65; color:rgba(245,239,226,0.6); }
+  .partner .p-tag{ margin-top:16px; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.14em; color:var(--rust); text-transform:uppercase; }
+
+  /* ---------- B2B ---------- */
+  .b2b{
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+  }
+  .b2b-photo{ aspect-ratio:5/4; border-radius:3px; overflow:hidden; position:relative; box-shadow:0 30px 60px -30px rgba(34,31,26,0.4); }
+  .b2b-photo img{ transition:transform .8s var(--ease); }
+  .b2b-photo:hover img{ transform:scale(1.05); }
+  .b2b-photo::before{
+    content:'B2B PARTNER RATES'; position:absolute; top:18px; left:18px; z-index:2;
+    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.18em; color:var(--ivory);
+    background:rgba(20,28,43,0.6); padding:6px 10px; border:1px solid rgba(245,239,226,0.35);
+  }
+  .b2b-card{
+    border:1px solid var(--line); border-radius:3px; padding:44px; background:var(--ivory-2);
+    position:relative;
+  }
+  .b2b-card::before{
+    content:''; position:absolute; top:0; left:44px; right:44px; height:1px;
+    background:repeating-linear-gradient(90deg, var(--rust) 0 8px, transparent 8px 16px);
+  }
+  .b2b-card h2{ font-size:clamp(28px,3.4vw,40px); line-height:1.15; margin-bottom:18px; }
+  .b2b-card p{ font-size:15px; line-height:1.75; color:rgba(34,31,26,0.68); margin-bottom:28px; }
+  .b2b-points{ display:flex; flex-direction:column; gap:14px; margin-bottom:32px; }
+  .b2b-point{ display:flex; gap:14px; align-items:flex-start; font-size:14px; }
+  .b2b-point .num{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--rust); border:1px solid var(--rust); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .call-strip{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    border-top:1px solid var(--line); padding-top:24px;
+  }
+  .call-strip .num-big{ font-family:'Cormorant Garamond', serif; font-size:26px; color:var(--rust); }
+  .call-strip .num-big .lbl{ display:block; font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.16em; color:rgba(34,31,26,0.55); text-transform:uppercase; margin-bottom:4px; }
+
+  /* ---------- GALLERY STRIP ---------- */
+  .strip{ padding:0; }
+  .strip-row{ display:grid; grid-template-columns:repeat(6,1fr); }
+  .strip-row a{ display:block; aspect-ratio:1/1; overflow:hidden; position:relative; }
+  .strip-row img{ filter:grayscale(0.15) brightness(0.88); transition:transform .5s var(--ease), filter .5s; }
+  .strip-row a:hover img{ transform:scale(1.08); filter:grayscale(0) brightness(1); }
+  .strip-cap{
+    display:flex; align-items:center; justify-content:space-between; padding:20px 6vw;
+    background:var(--ivory-2); flex-wrap:wrap; gap:12px;
+  }
+  .strip-cap .eyebrow{ margin:0; }
+  .strip-cap a.ig{ font-size:13px; letter-spacing:0.05em; border-bottom:1px solid var(--rust); padding-bottom:2px; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ background:var(--night); color:var(--ivory); padding:100px 6vw 40px; }
+  .foot-top{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:60px; padding-bottom:70px; border-bottom:1px solid var(--line-dark); }
+  .foot-brand .brand{ margin-bottom:18px; }
+  .foot-brand p{ font-size:14.5px; line-height:1.75; color:rgba(245,239,226,0.6); max-width:340px; }
+  .foot-col h4{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:20px; }
+  .foot-col a, .foot-col p{ display:block; font-size:14.5px; color:rgba(245,239,226,0.78); margin-bottom:12px; }
+  .foot-col a:hover{ color:var(--gold-soft); }
+  .wa-btn{
+    margin-top:6px; display:inline-flex; align-items:center; gap:10px; background:var(--gold); color:var(--night);
+    padding:13px 24px; border-radius:2px; font-size:13px; letter-spacing:0.05em; font-weight:500;
+    transition:transform .3s var(--ease), background .3s;
+  }
+  .wa-btn:hover{ background:var(--gold-soft); transform:translateY(-2px); }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:30px; flex-wrap:wrap; gap:14px; }
+  .foot-bottom p{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.08em; color:rgba(245,239,226,0.4); }
+
+  /* ---------- FLOATING WA ---------- */
+  .float-wa{
+    position:fixed; bottom:26px; right:26px; z-index:200; background:var(--gold); color:var(--night);
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 12px 30px -8px rgba(0,0,0,0.5); transition:transform .3s var(--ease);
+  }
+  .float-wa::before{
+    content:''; position:absolute; inset:0; border-radius:50%; background:var(--gold);
+    animation:ping 2.6s ease-out infinite; z-index:-1;
+  }
+  @keyframes ping{ 0%{ transform:scale(1); opacity:.55;} 100%{ transform:scale(1.9); opacity:0;} }
+  .float-wa:hover{ transform:scale(1.08); }
+
+  /* ---------- CONTACT SECTION ---------- */
+  #contact .section-head{ margin:0 auto; text-align:center; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1000px){
+    .tag-grid{ grid-template-columns:repeat(2,1fr); }
+    .tag.featured{ grid-column:span 2; }
+    .partner-grid{ grid-template-columns:1fr; }
+    .b2b{ grid-template-columns:1fr; }
+    .foot-top{ grid-template-columns:1fr; gap:40px; }
+    .strip-row{ grid-template-columns:repeat(4,1fr); }
+    .stats{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:720px){
+    nav{ display:none; }
+    .nav-cta{ display:none; }
+    .burger{ display:flex; }
+    section{ padding:80px 6vw; }
+    .tag-grid{ grid-template-columns:1fr 1fr; gap:18px; }
+    .strip-row{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker{ animation:none; }
+    .scroll-cue .line-anim{ animation:none; }
+    html{ scroll-behavior:auto; }
+    .reveal, .reveal-stagger > *{ opacity:1; transform:none; transition:none; }
+    .hero-content *{ animation:none !important; opacity:1 !important; transform:none !important; }
+    .float-wa::before{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header id="site-header">
+  <div class="brand">
+    <img data-asset="logo" alt="Nitara Hospitality monogram">
+    <div class="brand-text">
+      <div class="n1">Nitara</div>
+      <div class="n2">Hospitality</div>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#destinations">Destinations</a></li>
+      <li><a href="#partners">Hotel Partners</a></li>
+      <li><a href="#agents">For Travel Agents</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-right">
+    <a class="nav-cta" href="https://wa.me/919990004519" target="_blank" rel="noopener">Plan a Trip</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#destinations">Destinations</a>
+  <a href="#partners">Hotel Partners</a>
+  <a href="#agents">For Travel Agents</a>
+  <a href="#contact">Contact</a>
+  <a class="btn btn-gold" href="https://wa.me/919990004519" target="_blank" rel="noopener">Plan a Trip on WhatsApp</a>
+</div>
+
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"><img data-asset="jaisalmer" alt="Jaisalmer fort at sunset, Rajasthan" loading="eager"></div>
+  <div class="hero-mono">N</div>
+  <div class="hero-content">
+    <div class="eyebrow">Nitara Hospitality &nbsp;·&nbsp; Est. Delhi, India</div>
+    <h1>
+      <span class="line"><span>Stay across India's</span></span>
+      <span class="line"><span><em>most loved</em> destinations</span></span>
+    </h1>
+    <p>A curated hospitality desk connecting travellers and travel agents to heritage hotels, boutique resorts and hidden-gem stays — from the dunes of Jaisalmer to the pines of Manali, booked the way India actually books: on WhatsApp.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="https://wa.me/919990004519" target="_blank" rel="noopener">Plan Your Trip on WhatsApp</a>
+      <a class="btn btn-ghost" href="#destinations">Browse Destinations</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="line-anim"></div></div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <span>Jaisalmer</span><span>Shimla</span><span>Manali</span><span>Goa</span><span>Jaipur</span><span>Nainital</span><span>Dharamshala</span><span>Jim Corbett</span><span>Mussoorie</span><span>Hyderabad</span>
+  </div>
+</div>
+
+<div class="stats reveal-stagger" id="statsRow">
+  <div class="stat"><div class="num">9</div><div class="lbl">Destinations Curated</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Hotel Partners</div></div>
+  <div class="stat"><div class="num">5</div><div class="lbl">States Covered</div></div>
+  <div class="stat"><div class="num">1</div><div class="lbl">WhatsApp Away</div></div>
+</div>
+
+<section id="destinations">
+  <div class="section-head reveal">
+    <div class="eyebrow">The Collection &nbsp;·&nbsp; NH 01–09</div>
+    <h2>Nine destinations, one desk to book them all</h2>
+    <p>Every stay in the collection is checked in person before it earns a tag — heritage forts, hill retreats, jungle lodges and coastlines, each catalogued the way a well-travelled agent keeps their little black book.</p>
+  </div>
+  <div class="tag-grid reveal-stagger" id="tag-grid"></div>
+</section>
+
+<section class="partners" id="partners">
+  <div class="section-head on-dark reveal">
+    <div class="eyebrow on-dark">Hotel Partners</div>
+    <h2>The properties behind the promise</h2>
+    <p>Nitara Hospitality works directly with heritage hotels and resort groups across India, securing partner rates that travel agents can pass on with confidence.</p>
+  </div>
+  <div class="partner-grid reveal-stagger" id="partner-grid"></div>
+</section>
+
+<section id="agents">
+  <div class="b2b">
+    <div class="b2b-photo reveal"><img data-asset="handshake" alt="Business handshake representing a travel agent partnership" loading="lazy"></div>
+    <div class="b2b-card reveal">
+      <div class="eyebrow">For Travel Agents</div>
+      <h2>Best B2B hotel deals, one call away</h2>
+      <p>Running an agency or a solo travel desk? Nitara Hospitality gives you direct-to-property rates across our partner collection, so you can quote faster and margin better — without chasing a dozen hotel numbers yourself.</p>
+      <div class="b2b-points">
+        <div class="b2b-point"><span class="num">1</span> Direct partner pricing across 9+ destinations and 6 hotel groups</div>
+        <div class="b2b-point"><span class="num">2</span> Rate confirmations over WhatsApp, usually within the hour</div>
+        <div class="b2b-point"><span class="num">3</span> One point of contact for multi-city itineraries and group bookings</div>
+      </div>
+      <div class="call-strip">
+        <div class="num-big"><span class="lbl">Travel Agent Desk</span>+91 85276 19188</div>
+        <a class="btn btn-gold" href="tel:+918527619188">Call the Desk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="strip">
+  <div class="strip-cap">
+    <div class="eyebrow">From the Field &nbsp;·&nbsp; @nitarahospitality</div>
+    <a class="ig" href="https://instagram.com/nitarahospitality" target="_blank" rel="noopener">nitarahospitality.com →</a>
+  </div>
+  <div class="strip-row" id="strip-row"></div>
+</section>
+
+<section id="contact">
+  <div class="section-head reveal">
+    <div class="eyebrow" style="margin:0 auto 16px;">Get in Touch</div>
+    <h2>Tell us where you're headed</h2>
+    <p style="margin:18px auto 0;">Send us your dates and a rough budget on WhatsApp — we'll come back with two or three stays worth booking, not a list of fifty.</p>
+    <div class="hero-ctas" style="margin-top:34px; justify-content:center; opacity:1; animation:none;">
+      <a class="btn btn-gold" href="https://wa.me/919990004519" target="_blank" rel="noopener">Message on WhatsApp</a>
+      <a class="btn btn-ghost" style="border-color:var(--line); color:var(--ink);" href="tel:+919990004519">+91 99900 04519</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-top">
+    <div class="foot-brand">
+      <div class="brand">
+        <img data-asset="logo" alt="Nitara Hospitality monogram">
+        <div class="brand-text">
+          <div class="n1">Nitara</div>
+          <div class="n2" style="color:var(--gold-soft);">Hospitality</div>
+        </div>
+      </div>
+      <p>A hospitality desk for travellers and travel agents, curating heritage stays across India — booked over a WhatsApp message, the way it should be.</p>
+      <a class="wa-btn" href="https://wa.me/919990004519" target="_blank" rel="noopener">Chat on WhatsApp →</a>
+    </div>
+    <div class="foot-col">
+      <h4>Explore</h4>
+      <a href="#destinations">Destinations</a>
+      <a href="#partners">Hotel Partners</a>
+      <a href="#agents">For Travel Agents</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <a href="tel:+919990004519">+91 99900 04519 — General</a>
+      <a href="tel:+918527619188">+91 85276 19188 — Travel Agents</a>
+      <a href="https://instagram.com/nitarahospitality" target="_blank" rel="noopener">@nitarahospitality</a>
+      <a href="https://nitarahospitality.com" target="_blank" rel="noopener">nitarahospitality.com</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 NITARA HOSPITALITY — NEW DELHI, INDIA</p>
+    <p>DESIGNED FOR TRAVELLERS WHO'D RATHER BE PACKING</p>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/919990004519" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.02a7.94 7.94 0 0 0 5.53-13.58ZM12.05 18.53a6.6 6.6 0 0 1-3.37-.92l-.24-.14-2.5.65.67-2.44-.16-.25a6.6 6.6 0 1 1 5.6 3.1Zm3.62-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.2-.5.64-.62.77-.11.13-.23.15-.42.05-.2-.1-.83-.31-1.58-.98-.58-.52-.98-1.16-1.09-1.35-.11-.2-.01-.3.09-.4.09-.09.2-.23.3-.35.1-.11.13-.2.2-.33.07-.13.03-.25-.02-.35-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.34h-.38c-.13 0-.35.05-.53.25-.18.2-.7.68-.7 1.67 0 .98.72 1.93.82 2.06.1.13 1.4 2.14 3.4 3 .48.2.85.33 1.14.42.48.15.91.13 1.26.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.85.11-.94-.05-.09-.18-.14-.38-.24Z" fill="#141C2B"/></svg>
+</a>
+
+<script>
+(function(){
+  // ---- image sourcing: high-res Wikimedia Commons photography (CC-licensed), plus the real Nitara logo crop ----
+  const LOGO_B64 = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAE0ATQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiikJAGTwKAFqKa4jhRmLAY96zNZ18aaVWNfNduy9qrR6XNqbJO8hRTyUoAQa6dTke3SIhem7HWpNP8MrYzGUHLHrWtBaxQIFVACO4FS5NAhFG0YopaKBj6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKjmmSCNndgoAzyaAHO6xjLEKPesO81Z7qU20Knn+MdqpzXk3iKcwxAxRKcbvWt6xsEs4gCAWHegRU03RFtD5kp81zzz2rUACjC8CgmigYUUUUAFFFFAD6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoopruEUsTjAoAbNMsEbO7BQBnk1ycs0/iq68uPMMMZ5PrU15LN4huhFCSkcZwxHeuhtLSO0gVEUKQOcUCC1s47SFUVQCB1AqaiigYUUUUAFFFFSwCimE+1FTcCaiiitACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiikoACcDNYeq3cl1IsMBzzhsdql17Wv7NVI0Xe8vA9qXRNONrGZpDueTnntQIt2FilnGNowT1qzQetFAwooooAKKKKACjdiiioYBRRRUWYD6KKK2AKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKiuJViiZmYDjvUhOBk9K5zXN+pzRR278KfmwaAH6bEdSuZHmXKqflJFbwAUBR0FR20KwQIFGDjmpKBBRRRQMKKKKACiiigAooooAKKKKAH0UUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUjHaM9hQBVv7pbaEhjgsMCsvw7pz2sk0kp37zke1R63EdWuIlhf7h+bFb0KhIUX0GKBDj1ooooGFFFFABRRRQAUUUUAFFFFABRRRQA+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACobqQRwsCeSMCpqwfEk7xPAqE/MecUAReGbCS2nneQ7t54zXQHrUVtCIoFPcjNS0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAPooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBrnEbH0GawYHGqXbAjPltxW3dOEgf3BFY3hy3MEs5I+8eKBG2o2qF9KKD1NFAwooooAKKKKACiiigAooooAKKKKACiiigB9FFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAY+v3n2YRqDy/FXbGHy4lb1rH8URmW4tsdjW9Fxbp/uigQ6iiigYUUUUAFFFFABRRRQAUUUUAFFFFABRRRQA+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKQnAJpabJxG30oAxr0fablR6GtdP8AVL9KxLB/Ou5fY4rcHCgUCQUUUUDCiiigAooooAKKKKACiiigAooooAKKKKAH0UUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABTJf8AUv8A7p/lT6jm/wBRJ/un+VAHP+GW8y6uT6E10J61zPhA7rm79jXTH7xoEgooooGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAPooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACo5v8AUSf7p/lUlMl/1L/7p/lQBzPhAbbm79zXTH7xrnvDK+XdXI9Sa6E9aBIKKKKBhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAD6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigApsnMbfSnUhGQRQBg2CeTdy+5zW4OVBrHvT9muVPqa10/1S/SgSFooooGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAPooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDnPFEhiuLbHc1vRc26f7orM1+z+0iNgOU5q7YzeZEq+lAixRRRQMKa77adTSuWA60AGSy5AyahtZZpC3mwmIDpk5zXgv7VX7RGo/s/6G+qWtgbuGNN7ALkVxn7HP7eehftPSXunXgh0nVofuW7ttL/SgD6yBycU49qjkBTJAwg75oH7zAz1oAdI4BAX5j6CnD5Rlvlry343fEK/+E3hm61m0tmvBEhfaBmvLv2Tv2q779pW/1GC4sGsUss7sLjOKAPqRgCMg03zADzUcWQzJyQvFNuB+5ds4I6CgCfen96iuMuNXv0lZVgJA+tFAHb0UUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBFdIHgf2BNY3hy4M8s4J+6eK3HGY2HqMVgwINLu2JOPMbigRunqaKFO5Q3rRQMKjaXZOi461JTdoMqnvQB4L+1lNpmoaJp+gahaJcLqJKbnGcAnFfmp+0d+xp4z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";
+
+  function wm(file, width){
+    return 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(file) + '?width=' + width;
+  }
+
+  const ASSETS = {
+    logo: 'data:image/jpeg;base64,' + LOGO_B64,
+    jaisalmer: wm('Fort Jaisalmer at sunset.jpg', 1600),
+    shimla: wm('Landscape of Shimla , Himachal Pradesh.jpg', 1000),
+    goa: wm('Sunset from the Miramar Beach in Goa, India.jpg', 1000),
+    corbett: wm('Images of Tiger at Jim Corbett National Park.jpg', 1000),
+    manali: wm('Solang Valley ,Manali, Himachal Pardes, India.JPG', 1000),
+    nainital: wm('Nainital Lake, April, 2009.JPG', 1000),
+    jaipur: wm('East facade Hawa Mahal Jaipur from ground level (July 2022) - img 01.jpg', 1000),
+    hyderabad: wm('Charminar, Hyderabad, Telangana.jpg', 1000),
+    rajasthan: wm('A view of the Mehrangarh Fort, Jodhpur, Rajasthan.jpg', 1400),
+    mussoorie: wm('Panoramic view of Mussoorie, Uttarakhand.jpg', 1000),
+    dharamshala: wm('Dhauladhar alpenglow above Dharamshala, India.jpg', 1000),
+    samodePool: wm('Hotel pool at Samode Palace heritage hotel - panoramio.jpg', 1000),
+    samodeSuite: wm('Sheesh Mahal Suite, Samode Haveli, Jaipur.jpg', 1000),
+    piramalHaveli: wm('Hallway of Piramal Haveli heritage hotel, Shekhawati, Rajasthan.jpg', 1000),
+    tajmahal: wm('Taj Mahal, Agra, India.jpg', 1000),
+    handshake: wm('Business man and woman handshake in work office.jpg', 1200)
+  };
+
+  function applyImg(el, key){
+    if(!ASSETS[key]) return;
+    el.src = ASSETS[key];
+    el.onerror = function(){
+      el.onerror = null;
+      el.style.background = 'linear-gradient(135deg, #EDE4D0, #BD9257)';
+    };
+  }
+
+  document.querySelectorAll('[data-asset]').forEach(el=>{
+    applyImg(el, el.getAttribute('data-asset'));
+  });
+
+  // ---- header solid on scroll + scroll progress ----
+  const header = document.getElementById('site-header');
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', ()=>{
+    header.classList.toggle('solid', window.scrollY > 40);
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = pct + '%';
+  }, {passive:true});
+
+  // ---- hero parallax ----
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY;
+    if(y < window.innerHeight){
+      heroBg.style.transform = 'translateY(' + (y * 0.35) + 'px)';
+    }
+  }, {passive:true});
+
+  // ---- mobile menu ----
+  const burger = document.getElementById('burger');
+  const panel = document.getElementById('mobilePanel');
+  burger.addEventListener('click', ()=>{
+    const open = panel.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  panel.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+    panel.classList.remove('open'); burger.classList.remove('open'); document.body.style.overflow = '';
+  }));
+
+  // ---- ticker: duplicate content for seamless loop ----
+  const ticker = document.getElementById('ticker');
+  ticker.innerHTML += ticker.innerHTML;
+
+  // ---- destination tags ----
+  const destinations = [
+    {key:'jaisalmer', code:'NH-01 · RJ', name:'Jaisalmer', copy:'Golden ramparts at dusk and camel trails into the Thar.'},
+    {key:'shimla', code:'NH-02 · HP', name:'Shimla', copy:'Deodar ridgelines and a colonial-era mall road.'},
+    {key:'goa', code:'NH-03 · GA', name:'Goa', copy:'Palm-lined lanes and a coastline that turns gold at sunset.', featured:true},
+    {key:'corbett', code:'NH-04 · UK', name:'Jim Corbett', copy:"India's first tiger reserve — dawn safaris through sal forest."},
+    {key:'manali', code:'NH-05 · HP', name:'Manali', copy:'Snow-dusted valleys along the Beas river.'},
+    {key:'nainital', code:'NH-06 · UK', name:'Nainital', copy:'A lake town ringed by pine-covered hills.'},
+    {key:'jaipur', code:'NH-07 · RJ', name:'Jaipur', copy:'The Pink City — Hawa Mahal at first light.'},
+    {key:'hyderabad', code:'NH-08 · TG', name:'Hyderabad', copy:'Charminar, pearl bazaars and a skyline of minarets.'},
+    {key:'rajasthan', code:'NH-09 · RJ', name:'Rajasthan Circuit', copy:'A signature 5-day royal circuit across forts and havelis.'},
+  ];
+  const grid = document.getElementById('tag-grid');
+  destinations.forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'tag' + (d.featured ? ' featured' : '');
+    el.innerHTML = `
+      <div class="tag-hole"></div>
+      <div class="tag-photo">
+        <img src="${ASSETS[d.key]}" alt="${d.name}" loading="lazy">
+        <div class="tag-code">${d.code}</div>
+      </div>
+      <div class="tag-dash"></div>
+      <h3>${d.name}</h3>
+      <p>${d.copy}</p>
+    `;
+    grid.appendChild(el);
+  });
+
+  // ---- hotel partners ----
+  const partners = [
+    {key:'mussoorie', name:'Taj Mussoorie Foothills', stamp:'HERITAGE\\nLUXURY', copy:'A hillside luxury address on the road into Mussoorie, best rates available exclusively.', tag:'Uttarakhand, UK'},
+    {key:'dharamshala', name:'JUSTA Dharamshala', stamp:'BOUTIQUE\\nCOLLECTION', copy:'Premium boutique stays in the shadow of the Dhauladhar range.', tag:'Himachal Pradesh, HP'},
+    {key:'samodePool', name:'Amritara Hotels & Resorts', stamp:'PAN-INDIA\\nCHAIN', copy:'A boutique heritage collection with properties across the country.', tag:'Multiple States'},
+    {key:'samodeSuite', name:'Pratap Mahal', stamp:'PALACE\\nSTAY', copy:'A restored palace property, for travellers who want their history lived-in.', tag:'Rajasthan, RJ'},
+    {key:'piramalHaveli', name:'Shahpura Hotels & Resorts', stamp:'ROYAL\\nHERITAGE', copy:'Royal Rajasthan hospitality, run by the family that still calls it home.', tag:'Rajasthan, RJ'},
+    {key:'tajmahal', name:'Systematic Travel', stamp:'STAY\\nPARTNER', copy:'Our pan-India stay partner — comfort, anywhere in India.', tag:'Nationwide'},
+  ];
+  const pgrid = document.getElementById('partner-grid');
+  partners.forEach(p=>{
+    const el = document.createElement('div');
+    el.className = 'partner';
+    el.innerHTML = `
+      <div class="p-photo">
+        <img src="${ASSETS[p.key]}" alt="${p.name}" loading="lazy">
+        <div class="stamp"><span>${p.stamp}</span></div>
+      </div>
+      <div class="p-body">
+        <div>
+          <h3>${p.name}</h3>
+          <p>${p.copy}</p>
+        </div>
+        <div class="p-tag">${p.tag}</div>
+      </div>
+    `;
+    pgrid.appendChild(el);
+  });
+
+  // ---- instagram-style strip ----
+  const stripKeys = ['manali','jaisalmer','corbett','goa','shimla','jaipur'];
+  const strip = document.getElementById('strip-row');
+  stripKeys.forEach(k=>{
+    const a = document.createElement('a');
+    a.href = 'https://instagram.com/nitarahospitality';
+    a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = `<img src="${ASSETS[k]}" alt="Nitara Hospitality Instagram" loading="lazy">`;
+    strip.appendChild(a);
+  });
+
+  // ---- scroll reveal ----
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15, rootMargin:'0px 0px -60px 0px'});
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

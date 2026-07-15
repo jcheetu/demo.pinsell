@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FnF — Fresh Not Formal | Men's Casual Wear, Bhatinda</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink:     #0D0D0D;
+  --chalk:   #F2F0EB;
+  --lime:    #C8F135;
+  --lime-dk: #A3C820;
+  --warm:    #E8E2D8;
+  --muted:   #888580;
+  --rust:    #E05C30;
+  --wa:      #25D366;
+  --wa-dk:   #128C7E;
+  --off:     #F7F5F0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--chalk);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--lime);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.08s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease;
+  mix-blend-mode: difference;
+}
+.cursor.big {
+  width: 52px; height: 52px;
+  background: var(--lime);
+}
+body * { cursor: none; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  mix-blend-mode: difference;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: 0.12em;
+  color: var(--chalk);
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo span { color: var(--lime); }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--chalk); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--lime); }
+.nav-wa {
+  background: var(--wa);
+  color: var(--ink) !important;
+  padding: 0.45rem 1.1rem;
+  border-radius: 100px;
+  mix-blend-mode: normal;
+}
+.nav-wa:hover { background: var(--wa-dk); color: var(--chalk) !important; }
+
+/* ── HERO ── */
+.hero {
+  height: 100svh; min-height: 600px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  overflow: hidden; position: relative;
+}
+
+.hero-left {
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem 3rem 3rem 3.5rem;
+  position: relative; overflow: hidden;
+}
+
+.hero-left-img {
+  position: absolute; inset: 0;
+  object-fit: cover; width: 100%; height: 100%;
+  opacity: 0.55; filter: grayscale(20%);
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-left-img { transform: scale(1); }
+
+.hero-left-content { position: relative; z-index: 1; }
+
+.hero-tag {
+  display: inline-block;
+  background: var(--lime); color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 0.35rem 0.85rem; margin-bottom: 1.5rem;
+  border-radius: 100px;
+  animation: tagPop 0.6s cubic-bezier(0.34,1.56,0.64,1) both 0.8s;
+}
+
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 10vw, 9rem);
+  line-height: 0.88; letter-spacing: 0.02em;
+  color: var(--chalk);
+  animation: slideUp 0.9s cubic-bezier(0.22,1,0.36,1) both 0.2s;
+}
+.hero-title .accent { color: var(--lime); display: block; }
+
+.hero-sub {
+  font-size: 1rem; color: rgba(242,240,235,0.65);
+  margin-top: 1.2rem; line-height: 1.6; max-width: 320px;
+  font-style: italic;
+  animation: slideUp 0.9s cubic-bezier(0.22,1,0.36,1) both 0.5s;
+}
+
+.hero-cta-row {
+  display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;
+  animation: slideUp 0.9s cubic-bezier(0.22,1,0.36,1) both 0.7s;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.8rem 1.8rem; border-radius: 3px;
+  text-decoration: none; border: none;
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+  position: relative; overflow: hidden;
+}
+.btn:hover { transform: translateY(-3px); }
+
+.btn-lime {
+  background: var(--lime); color: var(--ink);
+  box-shadow: 0 6px 24px rgba(200,241,53,0.4);
+}
+.btn-lime:hover { background: var(--lime-dk); box-shadow: 0 12px 36px rgba(200,241,53,0.5); }
+
+.btn-outline {
+  background: transparent; color: var(--chalk);
+  border: 2px solid rgba(242,240,235,0.35);
+}
+.btn-outline:hover { border-color: var(--chalk); background: rgba(242,240,235,0.08); }
+
+.btn-wa {
+  background: var(--wa); color: var(--ink);
+  box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+}
+.btn-wa:hover { background: var(--wa-dk); color: var(--chalk); box-shadow: 0 12px 36px rgba(37,211,102,0.4); }
+
+/* Hero Right — collage */
+.hero-right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--ink);
+}
+.hero-right-img {
+  overflow: hidden; position: relative;
+}
+.hero-right-img:first-child { grid-row: span 2; }
+.hero-right-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+  filter: saturate(0.9);
+}
+.hero-right-img:hover img { transform: scale(1.06); }
+
+.hero-counter {
+  position: absolute; bottom: 1rem; right: 1rem;
+  background: var(--lime); color: var(--ink);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; padding: 0.2rem 0.6rem;
+  border-radius: 2px; z-index: 2;
+}
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--ink); overflow: hidden;
+  padding: 0.6rem 0; border-top: 1px solid #222; border-bottom: 1px solid #222;
+}
+.ticker-track {
+  display: flex; animation: ticker 20s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 0.15em;
+  color: var(--chalk); padding: 0 2.5rem;
+  display: inline-flex; align-items: center; gap: 2.5rem;
+}
+.ticker-item::after { content: '//'; color: var(--lime); opacity: 0.7; }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ── SECTION BASE ── */
+.section { padding: 6rem 2.5rem; max-width: 1400px; margin: 0 auto; }
+.section-full { padding: 6rem 0; }
+
+.eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.75rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--lime); flex-shrink: 0; }
+
+.display-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  letter-spacing: 0.03em; line-height: 0.92;
+  color: var(--ink);
+}
+.display-title .lime { color: var(--lime); }
+
+/* ── CATEGORIES / SHOP BY VIBE ── */
+.vibes { background: var(--off); }
+.vibes-inner { padding: 6rem 2.5rem; max-width: 1400px; margin: 0 auto; }
+.vibes-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+
+.vibes-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 320px 240px;
+  gap: 1rem;
+}
+
+.vibe-card {
+  position: relative; overflow: hidden;
+  border-radius: 4px;
+  cursor: none;
+}
+.vibe-card:first-child { grid-row: span 2; }
+
+.vibe-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
+  filter: saturate(0.85) brightness(0.88);
+}
+.vibe-card:hover img { transform: scale(1.08); filter: saturate(1) brightness(0.75); }
+
+.vibe-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.8rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+}
+.vibe-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 0.06em;
+  color: var(--chalk); line-height: 1;
+}
+.vibe-sub {
+  font-size: 0.78rem; color: rgba(242,240,235,0.65);
+  margin-top: 0.2rem; letter-spacing: 0.04em;
+}
+.vibe-tag {
+  display: inline-block; margin-top: 0.6rem;
+  background: var(--lime); color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 0.25rem 0.65rem; border-radius: 100px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+.vibe-card:hover .vibe-tag { opacity: 1; transform: translateY(0); }
+
+/* ── DROPS / PRODUCTS ── */
+.drops-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.drop-card {
+  position: relative;
+}
+.drop-img {
+  aspect-ratio: 3/4;
+  overflow: hidden; border-radius: 3px;
+  background: var(--warm);
+  position: relative;
+}
+.drop-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.drop-card:hover .drop-img img { transform: scale(1.06); }
+
+.drop-badge {
+  position: absolute; top: 0.75rem; left: 0.75rem;
+  background: var(--rust); color: var(--chalk);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.2rem 0.6rem; border-radius: 2px;
+}
+.drop-badge.new { background: var(--lime); color: var(--ink); }
+
+.drop-wa {
+  position: absolute; bottom: -3rem; left: 0; right: 0;
+  background: var(--wa); color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.08em;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.7rem;
+  transition: bottom 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  border-radius: 0 0 3px 3px;
+}
+.drop-card:hover .drop-wa { bottom: 0; }
+
+.drop-info { padding: 0.9rem 0 0; }
+.drop-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 0.92rem; color: var(--ink);
+}
+.drop-type {
+  font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem;
+}
+.drop-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.05em;
+  color: var(--ink); margin-top: 0.3rem;
+}
+.drop-price .old { color: var(--muted); font-size: 1rem; text-decoration: line-through; margin-right: 0.4rem; }
+
+/* ── FEATURE SPLIT ── */
+.feature-split {
+  background: var(--ink);
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 620px;
+}
+.feature-img {
+  overflow: hidden; position: relative;
+}
+.feature-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.85;
+  transition: transform 8s ease;
+}
+.feature-split:hover .feature-img img { transform: scale(1.04); }
+
+.feature-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--ink));
+}
+
+.feature-content {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 4rem 4rem 4rem 3rem; position: relative;
+}
+.feature-content .eyebrow { color: rgba(200,241,53,0.7); }
+.feature-content .eyebrow::before { background: var(--lime); }
+.feature-content .display-title { color: var(--chalk); }
+.feature-content .display-title .lime { color: var(--lime); }
+.feature-desc {
+  font-size: 1rem; line-height: 1.75;
+  color: rgba(242,240,235,0.6); margin-top: 1.5rem; max-width: 380px;
+}
+.feature-list {
+  list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem;
+}
+.feature-list li {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.9rem; color: rgba(242,240,235,0.8);
+}
+.feature-list li::before {
+  content: '→';
+  color: var(--lime); font-size: 0.85rem; flex-shrink: 0;
+}
+.feature-ctas { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+
+/* ── STYLE REEL / LOOKBOOK ── */
+.reel { background: var(--ink); overflow: hidden; padding: 5rem 0; }
+.reel-header { padding: 0 2.5rem; margin-bottom: 2.5rem; }
+.reel-header .display-title { color: var(--chalk); }
+.reel-track {
+  display: flex; gap: 1rem;
+  animation: reel 28s linear infinite;
+  width: max-content;
+}
+.reel-track:hover { animation-play-state: paused; }
+@keyframes reel {
+  0%{transform:translateX(0)} 100%{transform:translateX(-50%)}
+}
+.reel-item {
+  width: 260px; height: 380px; flex-shrink: 0;
+  overflow: hidden; border-radius: 4px;
+  position: relative;
+}
+.reel-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease, filter 0.4s ease;
+  filter: saturate(0.7) brightness(0.9);
+}
+.reel-item:hover img { transform: scale(1.05); filter: saturate(1) brightness(1); }
+.reel-item-label {
+  position: absolute; bottom: 0.75rem; left: 0.75rem;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--chalk); letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+  padding: 0.3rem 0.7rem; border-radius: 100px;
+}
+
+/* ── WHY FNF ── */
+.why-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border: 1px solid #E0DDD8; border-radius: 6px; overflow: hidden;
+}
+.why-item {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid #E0DDD8;
+  transition: background 0.3s;
+}
+.why-item:last-child { border-right: none; }
+.why-item:hover { background: var(--ink); }
+.why-item:hover .why-num,
+.why-item:hover .why-title,
+.why-item:hover .why-desc { color: var(--chalk); }
+.why-item:hover .why-num { color: var(--lime); }
+
+.why-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem; color: var(--lime);
+  line-height: 1; transition: color 0.3s;
+}
+.why-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); margin-top: 1rem; margin-bottom: 0.5rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  transition: color 0.3s;
+}
+.why-desc {
+  font-size: 0.85rem; line-height: 1.65; color: var(--muted);
+  transition: color 0.3s;
+}
+
+/* ── INSTA GRID ── */
+.insta { background: var(--off); padding: 5rem 2.5rem; }
+.insta-inner { max-width: 1400px; margin: 0 auto; }
+.insta-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; }
+.insta-handle {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 0.85rem;
+  color: var(--muted); letter-spacing: 0.08em;
+}
+.insta-link {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+  border-bottom: 2px solid var(--lime); padding-bottom: 0.15rem;
+}
+.insta-link:hover { color: var(--muted); }
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+.insta-img {
+  aspect-ratio: 1;
+  overflow: hidden; position: relative;
+}
+.insta-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; filter: saturate(0.85);
+  transition: transform 0.5s ease, filter 0.4s ease;
+}
+.insta-img:hover img { transform: scale(1.08); filter: saturate(1); }
+.insta-img::after {
+  content: '↗';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  font-size: 1.5rem; color: var(--chalk);
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+}
+.insta-img:hover::after { transform: translate(-50%,-50%) scale(1); }
+
+/* ── CTA SECTION ── */
+.cta-block {
+  background: var(--lime); padding: 5rem 2.5rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+  flex-wrap: wrap;
+}
+.cta-block h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  letter-spacing: 0.03em; line-height: 0.92;
+  color: var(--ink); max-width: 600px;
+}
+.cta-block h2 em { font-style: normal; color: var(--ink); opacity: 0.45; }
+.cta-block .cta-right { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+.cta-block .cta-right p { font-size: 0.95rem; color: var(--ink); opacity: 0.65; max-width: 280px; line-height: 1.6; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 4rem 2.5rem 2rem;
+  color: var(--chalk);
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; max-width: 1400px; margin: 0 auto;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(242,240,235,0.1);
+}
+.footer-brand {}
+.footer-logo-big {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 0.1em;
+  color: var(--chalk); display: block; margin-bottom: 0.5rem;
+}
+.footer-logo-big span { color: var(--lime); }
+.footer-tagline {
+  font-size: 0.9rem; color: var(--muted);
+  font-style: italic; line-height: 1.5; max-width: 240px;
+  margin-bottom: 1.5rem;
+}
+.footer-socials { display: flex; gap: 0.75rem; }
+.social-pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: rgba(242,240,235,0.08); border: 1px solid rgba(242,240,235,0.12);
+  color: var(--chalk); font-size: 0.75rem; font-weight: 600;
+  font-family: 'Syne', sans-serif; letter-spacing: 0.08em;
+  padding: 0.4rem 0.9rem; border-radius: 100px;
+  text-decoration: none; transition: background 0.25s, border-color 0.25s;
+}
+.social-pill:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+.footer-col h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1.25rem;
+}
+.footer-col a {
+  display: block; color: rgba(242,240,235,0.65);
+  font-size: 0.88rem; text-decoration: none;
+  margin-bottom: 0.6rem; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--lime); }
+
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1400px; margin: 2rem auto 0;
+  font-size: 0.75rem; color: rgba(242,240,235,0.3);
+  flex-wrap: wrap; gap: 1rem;
+}
+
+/* ── FLOAT WA ── */
+.float-wa {
+  position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 99;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--wa); color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+  animation: wpulse 2s ease-in-out infinite;
+}
+@keyframes wpulse {
+  0%,100%{box-shadow:0 8px 30px rgba(37,211,102,0.4)}
+  50%{box-shadow:0 8px 50px rgba(37,211,102,0.7),0 0 0 10px rgba(37,211,102,0.1)}
+}
+.float-wa:hover { background: var(--wa-dk); animation: none; transform: scale(1.08); }
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.75s ease, transform 0.75s ease; }
+.reveal.up { opacity:1; transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{min-height:100svh}
+  .vibes-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .vibe-card:first-child{grid-row:auto;grid-column:span 2}
+  .drops-grid{grid-template-columns:repeat(2,1fr)}
+  .feature-split{grid-template-columns:1fr}
+  .feature-img{height:50vw}
+  .feature-img-overlay{display:none}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .why-item:nth-child(2){border-right:none}
+  .why-item:nth-child(3){border-top:1px solid #E0DDD8}
+  .why-item:nth-child(4){border-top:1px solid #E0DDD8;border-right:none}
+  .insta-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-top{grid-template-columns:1fr 1fr}
+  nav .nav-links{display:none}
+}
+
+@media(max-width:640px){
+  .drops-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .why-item{border-right:none;border-bottom:1px solid #E0DDD8}
+  .insta-grid{grid-template-columns:repeat(2,1fr)}
+  .cta-block{flex-direction:column}
+  .footer-top{grid-template-columns:1fr}
+  .vibes-grid{grid-template-columns:1fr}
+  .vibe-card:first-child{grid-column:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- FLOAT WA -->
+<a class="float-wa" href="https://wa.me/919876543210?text=Hey%20FnF%2C%20checking%20out%20your%20new%20drops%20%F0%9F%94%A5" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#0D0D0D"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">F<span>n</span>F</a>
+  <div class="nav-links">
+    <a href="#shop">Shop</a>
+    <a href="#lookbook">Lookbook</a>
+    <a href="#vibes">Vibes</a>
+    <a href="#contact">Find Us</a>
+    <a href="https://www.instagram.com/fnfzzz/" target="_blank" class="nav-wa">Instagram ↗</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-left">
+    <img class="hero-left-img"
+      src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=900&auto=format&fit=crop&q=80"
+      alt="Young men fashion"/>
+    <div class="hero-left-content">
+      <div class="hero-tag">New Drops Every Week 🔥</div>
+      <h1 class="hero-title">
+        FRESH
+        <span class="accent">NOT</span>
+        FORMAL
+      </h1>
+      <p class="hero-sub">Streetwear, casuals & fits for the guys who don't play by the rules. Bhatinda's freshest cloth spot.</p>
+      <div class="hero-cta-row">
+        <a href="#shop" class="btn btn-lime">Shop Now →</a>
+        <a href="https://wa.me/919876543210?text=Hey%20FnF%21%20What%27s%20the%20latest%20drop%3F" class="btn btn-wa" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#0D0D0D"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          DM Us
+        </a>
+        <a href="https://www.instagram.com/fnfzzz/" class="btn btn-outline" target="_blank">@fnfzzz ↗</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-img">
+      <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=600&auto=format&fit=crop&q=80" alt="Men streetwear"/>
+      <div class="hero-counter">01/</div>
+    </div>
+    <div class="hero-right-img">
+      <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=450&auto=format&fit=crop&q=80" alt="Young men fashion"/>
+    </div>
+    <div class="hero-right-img">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=450&auto=format&fit=crop&q=80" alt="Casual men outfit"/>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Oversized Tees</span>
+    <span class="ticker-item">Cargo Pants</span>
+    <span class="ticker-item">Joggers</span>
+    <span class="ticker-item">Hoodies</span>
+    <span class="ticker-item">Denim Shirts</span>
+    <span class="ticker-item">Shorts</span>
+    <span class="ticker-item">Co-ords Sets</span>
+    <span class="ticker-item">Graphic Tees</span>
+    <span class="ticker-item">Track Pants</span>
+    <span class="ticker-item">Oversized Tees</span>
+    <span class="ticker-item">Cargo Pants</span>
+    <span class="ticker-item">Joggers</span>
+    <span class="ticker-item">Hoodies</span>
+    <span class="ticker-item">Denim Shirts</span>
+    <span class="ticker-item">Shorts</span>
+    <span class="ticker-item">Co-ords Sets</span>
+    <span class="ticker-item">Graphic Tees</span>
+    <span class="ticker-item">Track Pants</span>
+  </div>
+</div>
+
+<!-- ═══ SHOP BY VIBE ═══ -->
+<section class="vibes" id="vibes">
+  <div class="vibes-inner">
+    <div class="vibes-header reveal">
+      <div>
+        <div class="eyebrow">Collections</div>
+        <h2 class="display-title">SHOP BY <span class="lime">VIBE</span></h2>
+      </div>
+      <a href="https://www.instagram.com/fnfzzz/" class="btn btn-lime" target="_blank" style="font-size:0.75rem;padding:0.7rem 1.5rem">View All →</a>
+    </div>
+    <div class="vibes-grid reveal">
+      <div class="vibe-card">
+        <img src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=700&auto=format&fit=crop&q=80" alt="Street Casual"/>
+        <div class="vibe-overlay">
+          <div class="vibe-label">STREET CASUAL</div>
+          <div class="vibe-sub">Everyday flex, effortlessly cool</div>
+          <span class="vibe-tag">Shop Now →</span>
+        </div>
+      </div>
+      <div class="vibe-card">
+        <img src="https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=500&auto=format&fit=crop&q=80" alt="Chill Mode"/>
+        <div class="vibe-overlay">
+          <div class="vibe-label">CHILL MODE</div>
+          <div class="vibe-sub">Joggers, hoodies & co-ords</div>
+          <span class="vibe-tag">Shop Now →</span>
+        </div>
+      </div>
+      <div class="vibe-card">
+        <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=500&auto=format&fit=crop&q=80" alt="Smart Casual"/>
+        <div class="vibe-overlay">
+          <div class="vibe-label">SMART CASUAL</div>
+          <div class="vibe-sub">Clean, minimal & sharp</div>
+          <span class="vibe-tag">Shop Now →</span>
+        </div>
+      </div>
+      <div class="vibe-card">
+        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop&q=80" alt="Summer Drops"/>
+        <div class="vibe-overlay">
+          <div class="vibe-label">SUMMER DROPS</div>
+          <div class="vibe-sub">Shorts, linens & easy fits</div>
+          <span class="vibe-tag">Shop Now →</span>
+        </div>
+      </div>
+      <div class="vibe-card">
+        <img src="https://images.unsplash.com/photo-1544441893-675973e31985?w=500&auto=format&fit=crop&q=80" alt="Night Out"/>
+        <div class="vibe-overlay">
+          <div class="vibe-label">NIGHT OUT</div>
+          <div class="vibe-sub">Dark fits for big evenings</div>
+          <span class="vibe-tag">Shop Now →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEW DROPS ═══ -->
+<section class="section" id="shop">
+  <div class="eyebrow reveal">This Week</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem" class="reveal">
+    <h2 class="display-title">NEW <span class="lime">DROPS</span> 🔥</h2>
+    <a href="https://wa.me/919876543210?text=Show%20me%20all%20new%20arrivals!" class="btn btn-lime" target="_blank" style="font-size:0.75rem;padding:0.7rem 1.5rem">All Drops →</a>
+  </div>
+  <div class="drops-grid">
+
+    <div class="drop-card reveal">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80" alt="Oversized Tee"/>
+        <div class="drop-badge new">NEW</div>
+        <a href="https://wa.me/919876543210?text=I%20want%20the%20oversized%20tee!" class="drop-wa" target="_blank">
+          💬 Order on WhatsApp
+        </a>
+      </div>
+      <div class="drop-info">
+        <div class="drop-name">Acid Wash Oversized Tee</div>
+        <div class="drop-type">Tees · M L XL XXL</div>
+        <div class="drop-price"><span class="old">₹699</span>₹499</div>
+      </div>
+    </div>
+
+    <div class="drop-card reveal" style="transition-delay:0.1s">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&auto=format&fit=crop&q=80" alt="Cargo Pants"/>
+        <div class="drop-badge">HOT</div>
+        <a href="https://wa.me/919876543210?text=I%20want%20the%20cargo%20pants!" class="drop-wa" target="_blank">
+          💬 Order on WhatsApp
+        </a>
+      </div>
+      <div class="drop-info">
+        <div class="drop-name">6-Pocket Cargo Pants</div>
+        <div class="drop-type">Bottoms · 30–36 Waist</div>
+        <div class="drop-price">₹899</div>
+      </div>
+    </div>
+
+    <div class="drop-card reveal" style="transition-delay:0.2s">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=500&auto=format&fit=crop&q=80" alt="Hoodie"/>
+        <div class="drop-badge new">NEW</div>
+        <a href="https://wa.me/919876543210?text=I%20want%20the%20hoodie!" class="drop-wa" target="_blank">
+          💬 Order on WhatsApp
+        </a>
+      </div>
+      <div class="drop-info">
+        <div class="drop-name">Classic Fleece Hoodie</div>
+        <div class="drop-type">Hoodies · S M L XL</div>
+        <div class="drop-price"><span class="old">₹1199</span>₹899</div>
+      </div>
+    </div>
+
+    <div class="drop-card reveal" style="transition-delay:0.3s">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80" alt="Denim Shirt"/>
+        <div class="drop-badge">TRENDING</div>
+        <a href="https://wa.me/919876543210?text=I%20want%20the%20denim%20shirt!" class="drop-wa" target="_blank">
+          💬 Order on WhatsApp
+        </a>
+      </div>
+      <div class="drop-info">
+        <div class="drop-name">Washed Denim Shirt</div>
+        <div class="drop-type">Shirts · S M L XL XXL</div>
+        <div class="drop-price">₹799</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FEATURE SPLIT ═══ -->
+<section class="feature-split reveal">
+  <div class="feature-img">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&auto=format&fit=crop&q=80" alt="FnF Store Bhatinda"/>
+    <div class="feature-img-overlay"></div>
+  </div>
+  <div class="feature-content">
+    <div class="eyebrow">About FnF</div>
+    <h2 class="display-title">YOUR <span class="lime">LOCAL</span><br>FIT CHECK</h2>
+    <p class="feature-desc">
+      FnF is Bhatinda's go-to spot for young men who want to look fire without spending a fortune. We bring the freshest styles straight from the trends — no boring fits allowed.
+    </p>
+    <ul class="feature-list">
+      <li>New arrivals every week — follow <strong style="color:var(--lime)">@fnfzzz</strong></li>
+      <li>Sizes from S to 3XL — we got everyone</li>
+      <li>Budget-friendly without looking cheap</li>
+      <li>WhatsApp orders, no cap on delivery</li>
+      <li>Bhatinda store + citywide delivery</li>
+    </ul>
+    <div class="feature-ctas">
+      <a href="https://wa.me/919876543210?text=Hey%20FnF!%20Show%20me%20the%20new%20collection" class="btn btn-lime" target="_blank">WhatsApp Us 💬</a>
+      <a href="https://www.instagram.com/fnfzzz/" class="btn btn-outline" target="_blank">@fnfzzz →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LOOKBOOK REEL ═══ -->
+<section class="reel" id="lookbook">
+  <div class="reel-header reveal">
+    <div class="eyebrow" style="color:rgba(200,241,53,0.6)">Inspo</div>
+    <h2 class="display-title" style="color:var(--chalk)">THE <span class="lime">LOOKBOOK</span> — HOVER TO PAUSE</h2>
+  </div>
+  <div class="reel-track">
+    <!-- Loop x2 for seamless -->
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" alt="Fit 1"/><span class="reel-item-label">Street Look</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=400&auto=format&fit=crop&q=80" alt="Fit 2"/><span class="reel-item-label">Minimal Fit</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" alt="Fit 3"/><span class="reel-item-label">Smart Casual</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=400&auto=format&fit=crop&q=80" alt="Fit 4"/><span class="reel-item-label">Chill Mode</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" alt="Fit 5"/><span class="reel-item-label">Summer Fit</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=400&auto=format&fit=crop&q=80" alt="Fit 6"/><span class="reel-item-label">Urban Edge</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&auto=format&fit=crop&q=80" alt="Fit 7"/><span class="reel-item-label">Night Out</span></div>
+    <!-- repeat for seamless -->
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" alt="Fit 1"/><span class="reel-item-label">Street Look</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=400&auto=format&fit=crop&q=80" alt="Fit 2"/><span class="reel-item-label">Minimal Fit</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" alt="Fit 3"/><span class="reel-item-label">Smart Casual</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?w=400&auto=format&fit=crop&q=80" alt="Fit 4"/><span class="reel-item-label">Chill Mode</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80" alt="Fit 5"/><span class="reel-item-label">Summer Fit</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=400&auto=format&fit=crop&q=80" alt="Fit 6"/><span class="reel-item-label">Urban Edge</span></div>
+    <div class="reel-item"><img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=400&auto=format&fit=crop&q=80" alt="Fit 7"/><span class="reel-item-label">Night Out</span></div>
+  </div>
+</section>
+
+<!-- ═══ WHY FNF ═══ -->
+<section class="section">
+  <div class="eyebrow reveal" style="justify-content:center;margin-bottom:0.75rem">The FnF Difference</div>
+  <h2 class="display-title reveal" style="text-align:center;margin-bottom:3rem">WHY GUYS <span class="lime" style="color:var(--lime)">LOVE US</span></h2>
+  <div class="why-grid reveal">
+    <div class="why-item">
+      <div class="why-num">01</div>
+      <div class="why-title">Fresh Drops Weekly</div>
+      <p class="why-desc">New styles every week, following the latest trends. Follow @fnfzzz so you're always first to know.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-num">02</div>
+      <div class="why-title">Real Prices, No BS</div>
+      <p class="why-desc">Premium looks at prices that won't drain your wallet. Trendy clothes shouldn't cost a fortune.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-num">03</div>
+      <div class="why-title">All Sizes, Always</div>
+      <p class="why-desc">S to 3XL in stock. Every guy deserves a fit that actually fits — we make that happen.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-num">04</div>
+      <div class="why-title">WA Orders Instant</div>
+      <p class="why-desc">Order on WhatsApp, get it delivered same day within Bhatinda. No app, no wait, no stress.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INSTAGRAM ═══ -->
+<section class="insta" id="contact">
+  <div class="insta-inner">
+    <div class="insta-header reveal">
+      <div>
+        <div class="eyebrow">Follow the Drip</div>
+        <h2 class="display-title">@<span style="color:var(--lime)">fnfzzz</span></h2>
+        <div class="insta-handle">Bhatinda's Freshest Fashion · Instagram</div>
+      </div>
+      <a href="https://www.instagram.com/fnfzzz/" class="insta-link" target="_blank">Follow Us ↗</a>
+    </div>
+    <div class="insta-grid reveal">
+      <a class="insta-img" href="https://www.instagram.com/fnfzzz/" target="_blank">
+        <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400&auto=format&fit=crop&q=80" alt="Insta 1"/>
+      </a>
+      <a class="insta-img" href="https://www.instagram.com/fnfzzz/" target="_blank">
+        <img src="https://images.unsplash.com/photo-1604177091072-adce04e3b9c5?w=400&auto=format&fit=crop&q=80" alt="Insta 2"/>
+      </a>
+      <a class="insta-img" href="https://www.instagram.com/fnfzzz/" target="_blank">
+        <img src="https://images.unsplash.com/photo-1614251056798-0a63eda2bb25?w=400&auto=format&fit=crop&q=80" alt="Insta 3"/>
+      </a>
+      <a class="insta-img" href="https://www.instagram.com/fnfzzz/" target="_blank">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&auto=format&fit=crop&q=80" alt="Insta 4"/>
+      </a>
+      <a class="insta-img" href="https://www.instagram.com/fnfzzz/" target="_blank">
+        <img src="https://images.unsplash.com/photo-1602810316693-3667c854239a?w=400&auto=format&fit=crop&q=80" alt="Insta 5"/>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-block reveal">
+  <h2>READY TO <em>LEVEL UP</em> YOUR WARDROBE?</h2>
+  <div class="cta-right">
+    <p>Hit us up on WhatsApp for latest drops, sizing help, or to place an order. We reply fast. 🔥</p>
+    <a href="https://wa.me/919876543210?text=Hey%20FnF!%20Show%20me%20what%27s%20new%20%F0%9F%94%A5" class="btn" style="background:var(--ink);color:var(--chalk);font-size:0.85rem" target="_blank">
+      💬 Chat on WhatsApp
+    </a>
+    <a href="https://www.instagram.com/fnfzzz/" class="btn" style="background:transparent;border:2px solid var(--ink);color:var(--ink);font-size:0.85rem" target="_blank">
+      Follow @fnfzzz →
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo-big">F<span>n</span>F</span>
+      <p class="footer-tagline">Fresh. Not. Formal.<br>Bhatinda's young men's casual wear hub.</p>
+      <div class="footer-socials">
+        <a class="social-pill" href="https://www.instagram.com/fnfzzz/" target="_blank">📸 @fnfzzz</a>
+        <a class="social-pill" href="https://www.facebook.com/p/Fabric-Fashion-61578883403001/" target="_blank">📘 Facebook</a>
+        <a class="social-pill" href="https://wa.me/919876543210" target="_blank">💬 WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#">Tees & Tops</a>
+      <a href="#">Bottoms</a>
+      <a href="#">Hoodies</a>
+      <a href="#">Shirts</a>
+      <a href="#">Sets & Co-ords</a>
+      <a href="#">New Drops</a>
+    </div>
+    <div class="footer-col">
+      <h4>Vibes</h4>
+      <a href="#">Street Casual</a>
+      <a href="#">Smart Casual</a>
+      <a href="#">Chill Mode</a>
+      <a href="#">Night Out</a>
+      <a href="#">Summer Fits</a>
+    </div>
+    <div class="footer-col">
+      <h4>Find Us</h4>
+      <a href="#">Bhatinda, Punjab</a>
+      <a href="https://wa.me/919876543210" target="_blank">WhatsApp Order</a>
+      <a href="https://www.instagram.com/fnfzzz/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/p/Fabric-Fashion-61578883403001/" target="_blank">Facebook</a>
+      <a href="#">Store Hours: 10AM–9PM</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 FnF — Fabric &amp; Fashion, Bhatinda</span>
+    <span>Designed for the fresh generation of Punjab 🔥</span>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .vibe-card, .drop-card, .reel-item').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+});
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting) {
+      e.target.style.transitionDelay = (e.target.dataset.delay || 0) + 'ms';
+      e.target.classList.add('up');
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

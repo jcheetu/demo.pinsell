@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "test-stores-pieba-in",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
