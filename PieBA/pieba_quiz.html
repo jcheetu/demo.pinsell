@@ -1,0 +1,1951 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>PieBA — Is Your Shop Ready to Grow?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* ── RESET ── */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ── DESIGN TOKENS ── */
+        :root {
+            --yellow: #FFD84D;
+            --pink: #FF3FA4;
+            --blue: #3B82F6;
+            --cyan: #00C9C8;
+            --green: #22C55E;
+            --orange: #FF6B2B;
+            --dark: #0A0A12;
+            --dark2: #11111E;
+            --dark3: #181828;
+            --glass: rgba(255,255,255,0.04);
+            --glass2: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.08);
+            --border2: rgba(255,255,255,0.14);
+            --text: #E8E8F0;
+            --muted: #9090B0;
+            --font-h: 'Syne',sans-serif;
+            --font-b: 'DM Sans',sans-serif;
+            --r: 16px;
+            --r2: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --shadow2: 0 12px 48px rgba(0,0,0,0.6);
+        }
+
+        html, body {
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--text);
+            font-family: var(--font-b);
+            overflow: hidden;
+            position: relative;
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            body::after {
+                content: '';
+                position: fixed;
+                inset: 0;
+                z-index: 0;
+                background: radial-gradient(ellipse 60% 50% at 15% 20%,rgba(255,216,77,0.06) 0%,transparent 60%), radial-gradient(ellipse 50% 50% at 85% 80%,rgba(255,63,164,0.07) 0%,transparent 60%), radial-gradient(ellipse 40% 40% at 50% 50%,rgba(59,130,246,0.04) 0%,transparent 60%);
+                pointer-events: none;
+            }
+
+        /* ── PROGRESS BAR ── */
+        #progress-bar-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            height: 3px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg,var(--yellow),var(--pink));
+            transition: width .5s ease;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* ── SCREEN SYSTEM ── */
+        .screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            z-index: 1;
+            padding: 56px 20px 48px;
+        }
+
+            .screen.active {
+                display: flex;
+                animation: slideUp .38s cubic-bezier(.22,.68,0,1.2) both;
+            }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .screen-center {
+            justify-content: center;
+            min-height: 100%;
+        }
+
+        .screen-top {
+            justify-content: flex-start;
+            padding-top: 72px;
+        }
+
+        .screen-inner {
+            width: 100%;
+            max-width: 460px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── STEP LABEL ── */
+        .screen-step {
+            font-family: var(--font-h);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .screen-step::before {
+                content: '';
+                width: 24px;
+                height: 2px;
+                background: var(--cyan);
+                border-radius: 2px;
+            }
+
+        /* ── QUESTION HEADING ── */
+        .screen-q {
+            font-family: var(--font-h);
+            font-size: clamp(1.4rem,4.5vw,1.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .screen-sub {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-bottom: 26px;
+            line-height: 1.65;
+        }
+
+        /* ── OPTION BUTTONS ── */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .opt-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 15px 18px;
+            font-family: var(--font-h);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: all .18s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .opt-btn::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg,rgba(255,216,77,0.05),rgba(255,63,164,0.04));
+                opacity: 0;
+                transition: opacity .2s;
+            }
+
+            .opt-btn:hover {
+                border-color: rgba(255,216,77,0.3);
+                background: var(--glass2);
+                transform: translateY(-1px);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            }
+
+                .opt-btn:hover::before {
+                    opacity: 1;
+                }
+
+            .opt-btn.selected {
+                border-color: var(--pink);
+                background: rgba(255,63,164,0.08);
+                box-shadow: 0 4px 24px rgba(255,63,164,0.2);
+                color: #fff;
+            }
+
+                .opt-btn.selected::after {
+                    content: '✓';
+                    position: absolute;
+                    right: 16px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    background: var(--pink);
+                    color: #fff;
+                    font-size: 0.78rem;
+                    line-height: 24px;
+                    text-align: center;
+                }
+
+        .opt-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+
+        .multi-hint {
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .other-input {
+            margin-top: 9px;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            font-family: var(--font-b);
+            font-size: 0.95rem;
+            color: var(--text);
+            background: var(--glass);
+            width: 100%;
+            outline: none;
+            transition: border-color .2s;
+            backdrop-filter: blur(8px);
+            display: none;
+        }
+
+            .other-input::placeholder {
+                color: var(--muted);
+            }
+
+            .other-input:focus {
+                border-color: var(--pink);
+            }
+
+            .other-input.visible {
+                display: block;
+            }
+
+        /* ── NAV BUTTONS ── */
+        .next-btn {
+            margin-top: 20px;
+            padding: 16px 28px;
+            background: linear-gradient(135deg,var(--pink),var(--orange));
+            color: #fff;
+            border: none;
+            border-radius: var(--r);
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 8px 28px rgba(255,63,164,0.35);
+            transition: transform .2s,box-shadow .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: -0.2px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+            .next-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 14px 40px rgba(255,63,164,0.45);
+            }
+
+            .next-btn:disabled {
+                opacity: 0.35;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+        .back-link {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: color .2s;
+            font-family: var(--font-b);
+        }
+
+            .back-link:hover {
+                color: var(--text);
+            }
+
+        /* ══════════════════════════════
+           SCREEN 1 — WELCOME
+        ══════════════════════════════ */
+        #s1 {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .welcome-pie-icon {
+            width: 78px;
+            height: 78px;
+            border-radius: 22px;
+            background: linear-gradient(135deg,var(--yellow),var(--pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 40px rgba(255,63,164,0.3);
+        }
+
+        .welcome-h {
+            font-family: var(--font-h);
+            font-size: clamp(1.9rem,6vw,2.6rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 14px;
+            letter-spacing: -1px;
+        }
+
+            .welcome-h em {
+                font-style: normal;
+                color: var(--yellow);
+            }
+
+        .welcome-sub {
+            color: var(--muted);
+            font-size: 0.97rem;
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 340px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .welcome-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 15px;
+            font-family: var(--font-h);
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            backdrop-filter: blur(8px);
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg,var(--yellow),var(--orange));
+            color: var(--dark);
+            border: none;
+            border-radius: var(--r);
+            font-family: var(--font-h);
+            font-size: 1.05rem;
+            font-weight: 800;
+            padding: 18px 36px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 8px 36px rgba(255,216,77,0.35);
+            transition: transform .2s,box-shadow .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+            .start-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 14px 44px rgba(255,107,43,0.4);
+            }
+
+        .time-note {
+            color: var(--muted);
+            font-size: 0.78rem;
+            margin-top: 12px;
+        }
+
+        /* ══════════════════════════════
+           SCREEN 11 — VISUALIZATION
+        ══════════════════════════════ */
+        #s11 {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .viz-card {
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto 24px;
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: var(--shadow2);
+            backdrop-filter: blur(12px);
+        }
+
+        .viz-step {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+            .viz-step:last-child {
+                border-bottom: none;
+            }
+
+        .viz-step-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .viz-step:nth-child(1) .viz-step-icon {
+            background: rgba(255,216,77,0.1);
+        }
+
+        .viz-step:nth-child(2) .viz-step-icon {
+            background: rgba(255,63,164,0.1);
+        }
+
+        .viz-step:nth-child(3) .viz-step-icon {
+            background: rgba(34,197,94,0.1);
+        }
+
+        .viz-step-text strong {
+            display: block;
+            font-family: var(--font-h);
+            font-weight: 800;
+            font-size: 0.93rem;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .viz-step-text span {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .viz-badge {
+            background: linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));
+            border: 1px solid rgba(34,197,94,0.25);
+            color: #fff;
+            border-radius: 14px;
+            padding: 18px 20px;
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 800;
+            margin: 0 auto 24px;
+            max-width: 360px;
+            text-align: center;
+        }
+
+            .viz-badge span {
+                color: var(--green);
+            }
+
+        /* ══════════════════════════════
+           SCREEN 12 — LOADER
+        ══════════════════════════════ */
+        #s12 {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.06);
+            border-top: 3px solid var(--yellow);
+            border-right: 3px solid var(--pink);
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 32px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-texts {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            margin-bottom: 28px;
+        }
+
+        .loader-text {
+            font-family: var(--font-h);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.2);
+            transition: color .4s,transform .4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+            .loader-text.active {
+                color: #fff;
+                transform: scale(1.03);
+            }
+
+            .loader-text.done {
+                color: var(--green);
+            }
+
+        .loader-progress-wrap {
+            width: 100%;
+            max-width: 280px;
+            height: 4px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .loader-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            background: linear-gradient(90deg,var(--yellow),var(--pink));
+            transition: width .45s ease;
+        }
+
+        /* ══════════════════════════════
+           SCREEN 13 — RESULTS
+        ══════════════════════════════ */
+        #s13 {
+            background: var(--dark);
+        }
+
+        .results-h {
+            font-family: var(--font-h);
+            font-size: clamp(1.45rem,5vw,1.9rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .results-sub {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .insights-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px 18px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(8px);
+        }
+
+        .insight-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text);
+            font-family: var(--font-h);
+            font-weight: 600;
+        }
+
+            .insight-row:last-child {
+                border-bottom: none;
+            }
+
+        .insight-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #fff;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .rec-card {
+            background: linear-gradient(135deg,var(--dark2),var(--dark3));
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px 18px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .rec-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg,var(--yellow),var(--pink));
+            }
+
+        .rec-title {
+            font-family: var(--font-h);
+            font-weight: 800;
+            color: var(--yellow);
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .rec-items {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .rec-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-h);
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .rec-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--pink);
+            flex-shrink: 0;
+        }
+
+        /* ══════════════════════════════
+           SCREEN 14 — CTA CONTACT
+        ══════════════════════════════ */
+        #s14_free {
+            background: var(--dark);
+        }
+
+        .cta-h {
+            font-family: var(--font-h);
+            font-size: clamp(1.4rem,5vw,1.9rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .cta-sub {
+            color: var(--muted);
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+            line-height: 1.65;
+        }
+
+        /* ── CONTACT FORM ── */
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-label {
+            font-family: var(--font-h);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 7px;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+            .form-label .req {
+                color: var(--pink);
+            }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            font-family: var(--font-b);
+            font-size: 0.97rem;
+            color: var(--text);
+            background: var(--glass);
+            outline: none;
+            transition: border-color .2s,box-shadow .2s;
+            backdrop-filter: blur(8px);
+            -webkit-appearance: none;
+        }
+
+            .form-input::placeholder {
+                color: var(--muted);
+            }
+
+            .form-input:focus {
+                border-color: rgba(255,63,164,0.5);
+                box-shadow: 0 0 0 3px rgba(255,63,164,0.08);
+            }
+
+            .form-input.error {
+                border-color: rgba(255,80,80,0.6);
+            }
+
+        /* ── INSTAGRAM NUDGE CARD ── */
+        .ig-nudge {
+            background: linear-gradient(135deg,rgba(240,148,51,0.12),rgba(188,24,136,0.1));
+            border: 1px solid rgba(188,24,136,0.25);
+            border-radius: var(--r);
+            padding: 16px 18px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .ig-nudge-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#bc1888);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .ig-nudge-text {
+            flex: 1;
+        }
+
+            .ig-nudge-text strong {
+                display: block;
+                font-family: var(--font-h);
+                font-weight: 800;
+                color: #fff;
+                font-size: 0.88rem;
+                margin-bottom: 3px;
+            }
+
+            .ig-nudge-text span {
+                font-size: 0.78rem;
+                color: var(--muted);
+                line-height: 1.4;
+            }
+
+        .ig-follow-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg,#f09433,#dc2743,#bc1888);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-top: 10px;
+            font-family: var(--font-h);
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform .2s,opacity .2s;
+            width: 100%;
+            justify-content: center;
+        }
+
+            .ig-follow-btn:hover {
+                transform: translateY(-1px);
+                opacity: 0.9;
+            }
+
+        .or-divider {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.78rem;
+            position: relative;
+            margin: 16px 0;
+        }
+
+            .or-divider::before, .or-divider::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                width: 38%;
+                height: 1px;
+                background: var(--border);
+            }
+
+            .or-divider::before {
+                left: 0;
+            }
+
+            .or-divider::after {
+                right: 0;
+            }
+
+        .wa-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: var(--r);
+            background: #25D366;
+            color: #fff;
+            border: none;
+            font-family: var(--font-h);
+            font-size: 0.97rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            transition: transform .2s,box-shadow .2s;
+            box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+            margin-bottom: 9px;
+        }
+
+            .wa-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 32px rgba(37,211,102,0.35);
+            }
+
+        /* ── FIELD VALIDATION HINT ── */
+        .form-hint {
+            font-size: 0.73rem;
+            color: var(--muted);
+            margin-top: 5px;
+            padding-left: 2px;
+        }
+
+        /* ══════════════════════════════
+           SCREEN 15 — PAYMENT
+        ══════════════════════════════ */
+        #s15_paid {
+            background: var(--dark);
+        }
+
+        .pay-headline {
+            font-family: var(--font-h);
+            font-size: clamp(1.3rem,4vw,1.7rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .pay-sub {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .pay-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px 20px;
+            margin-bottom: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .pay-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg,var(--yellow),var(--pink));
+            }
+
+        .pay-price {
+            font-family: var(--font-h);
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--yellow);
+            margin-bottom: 4px;
+        }
+
+            .pay-price span {
+                font-size: 1rem;
+                color: var(--muted);
+                font-weight: 400;
+            }
+
+        .pay-desc {
+            color: var(--muted);
+            font-size: 0.87rem;
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .pay-includes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pay-include {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: var(--text);
+            font-family: var(--font-h);
+            font-weight: 600;
+        }
+
+        .pay-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--yellow);
+            flex-shrink: 0;
+        }
+
+        .upi-box {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+        }
+
+        .upi-label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-family: var(--font-h);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .upi-id-text {
+            font-family: var(--font-h);
+            font-weight: 800;
+            color: var(--yellow);
+            font-size: 1rem;
+        }
+
+        .copy-btn {
+            background: var(--glass2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 7px 14px;
+            color: var(--text);
+            font-family: var(--font-h);
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+            .copy-btn:hover {
+                background: rgba(255,255,255,0.1);
+            }
+
+        .upi-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--r);
+            background: linear-gradient(135deg,var(--yellow),var(--orange));
+            color: var(--dark);
+            border: none;
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            transition: transform .2s,box-shadow .2s;
+            margin-bottom: 10px;
+            box-shadow: 0 8px 28px rgba(255,216,77,0.3);
+        }
+
+            .upi-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 14px 36px rgba(255,107,43,0.4);
+            }
+
+        .apps-row {
+            display: flex;
+            gap: 9px;
+            margin-bottom: 14px;
+        }
+
+        .app-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border-radius: var(--r2);
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: var(--font-h);
+            font-weight: 700;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: background .2s,border-color .2s;
+            text-align: center;
+        }
+
+            .app-btn:hover {
+                background: var(--glass2);
+                border-color: var(--border2);
+            }
+
+        .pay-note {
+            color: var(--muted);
+            font-size: 0.75rem;
+            text-align: center;
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .skip-link {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: color .2s;
+            font-family: var(--font-b);
+        }
+
+            .skip-link:hover {
+                color: var(--text);
+            }
+
+        /* ══════════════════════════════
+           SCREEN 16 — THANK YOU
+        ══════════════════════════════ */
+        #s16 {
+            background: var(--dark);
+            text-align: center;
+        }
+
+        .ty-emoji {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+            animation: bounce .85s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .ty-h {
+            font-family: var(--font-h);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .ty-sub {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.65;
+            margin-bottom: 24px;
+        }
+
+        .ty-card {
+            background: var(--dark2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 22px 18px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .ty-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-h);
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+            .ty-step:last-child {
+                border-bottom: none;
+            }
+
+        .ty-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,var(--yellow),var(--orange));
+            color: var(--dark);
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ══════════════════════════════
+           TOAST
+        ══════════════════════════════ */
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(70px);
+            background: var(--dark3);
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 11px 22px;
+            font-family: var(--font-h);
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 999;
+            transition: transform .3s ease,opacity .3s;
+            opacity: 0;
+            white-space: nowrap;
+            box-shadow: var(--shadow2);
+            backdrop-filter: blur(12px);
+        }
+
+            #toast.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+
+        /* ── MOBILE ── */
+        @media(max-width:480px) {
+            .screen {
+                padding: 56px 16px 36px;
+            }
+
+            .opt-btn {
+                padding: 13px 14px;
+                font-size: 0.9rem;
+            }
+
+            .welcome-h {
+                font-size: 1.7rem;
+            }
+
+            .screen-q {
+                font-size: 1.3rem;
+            }
+
+            .ig-nudge {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .ig-nudge-icon {
+                margin: 0 auto;
+            }
+        }
+    </style>
+
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7Q46YJXV4V"></script>
+
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+
+            gtag('config', 'G-7Q46YJXV4V');
+        </script>
+</head>
+<body>
+
+    <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+    <!-- S1 — WELCOME -->
+    <section class="screen screen-center active" id="s1">
+        <div class="screen-inner" style="align-items:center;text-align:center;max-width:380px;">
+            <div class="welcome-pie-icon">🥧</div>
+            <h1 class="welcome-h">Is your Business <em>ready</em> to grow online?</h1>
+            <p class="welcome-sub">Answer quick questions. We'll show you exactly how to get more customers — even while you sleep.</p>
+            <div class="welcome-badges">
+                <div class="badge"><i class="fa-regular fa-clock"></i> 2 minutes</div>
+                <div class="badge"><i class="fa-solid fa-bullseye"></i> Free analysis</div>
+                <div class="badge"><i class="fa-solid fa-mobile-screen"></i> No tech skills needed</div>
+            </div>
+            <button class="start-btn" onclick="startQuiz()">Let's Find Out <i class="fa-solid fa-arrow-right"></i></button>
+            <p class="time-note" style="margin-top:14px;">500+ shop owners growing with PieBA</p>
+        </div>
+    </section>
+
+    <!-- S2 — BUSINESS TYPE -->
+    <section class="screen screen-top" id="s2">
+        <div class="screen-inner">
+            <div class="screen-step">Step 1 of 10</div>
+            <h2 class="screen-q">What kind of business do you run?</h2>
+            <p class="screen-sub">Tap to select — we personalise everything for you.</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">🍽️</span>Restaurant / Cafe</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">🎂</span>Bakery</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">🛒</span>Grocery / Kirana</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">👗</span>Fashion / Boutique</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">📱</span>Electronics</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">🎁</span>Gift Shop</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">🏠</span>Home Business</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">💄</span>Beauty / Salon</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s2')"><span class="opt-icon">💊</span>Pharmacy</button>
+                <button class="opt-btn" id="other-btn-s2" onclick="selectOpt(this,'s2',true)"><span class="opt-icon">✏️</span>Other</button>
+            </div>
+            <input class="other-input" id="other-input-s2" placeholder="Type your business type..." oninput="answers.businessTypeOther=this.value" />
+            <button class="next-btn" id="next-s2" onclick="goTo('s3',2)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s1',0)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>
+
+    <!-- S3 — SELLING STYLE -->
+    <section class="screen screen-top" id="s3">
+        <div class="screen-inner">
+            <div class="screen-step">Step 2 of 10</div>
+            <h2 class="screen-q">How do customers usually order from you?</h2>
+            <p class="screen-sub">Pick the closest to how you work today.</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">🚶</span>Walk-in only</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">💬</span>WhatsApp</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">📞</span>Phone calls</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">📸</span>Instagram DM</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">🛵</span>Swiggy / Zomato</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s3')"><span class="opt-icon">🌐</span>I already have a website</button>
+            </div>
+            <button class="next-btn" id="next-s3" onclick="goTo('s4',3)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s2',2)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>
+
+    <!-- S4 — PAIN DISCOVERY -->
+    <section class="screen screen-top" id="s4">
+        <div class="screen-inner">
+            <div class="screen-step">Step 3 of 10</div>
+            <h2 class="screen-q">What frustrates you the most?</h2>
+            <p class="screen-sub">Be honest — we've heard it all. 😄</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">🔁</span>Customers forget to reorder</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">📱</span>Too many WhatsApp messages</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">⚡</span>Losing customers to competitors</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">🌐</span>No online presence</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">😵</span>Orders become confusing</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s4')"><span class="opt-icon">🔍</span>Hard to get new customers</button>
+            </div>
+            <button class="next-btn" id="next-s4" onclick="goTo('s5',4)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s3',3)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>
+
+    <!-- S5 — EMOTIONAL TRIGGER -->
+    <section class="screen screen-top" id="s5">
+        <div class="screen-inner">
+            <div class="screen-step">Step 4 of 10</div>
+            <h2 class="screen-q">What would make you happiest?</h2>
+            <p class="screen-sub">Dream big — this is exactly what we'll help you get. 🌟</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">📈</span>More daily orders</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">🔄</span>Repeat customers</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">✨</span>Looking professional online</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">📋</span>Easier order management</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">🗺️</span>More visibility on Google</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s5')"><span class="opt-icon">🕐</span>Customers ordering anytime</button>
+            </div>
+            <button class="next-btn" id="next-s5" onclick="goTo('s10',5)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s4',4)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>
+
+    <!-- S6 — CUSTOMER BEHAVIOR (multi-select) -->
+    <!--<section class="screen screen-top" id="s6">
+        <div class="screen-inner">
+            <div class="screen-step">Step 5 of 10</div>
+            <h2 class="screen-q">Do customers ask these things often?</h2>
+            <p class="multi-hint">Select all that apply 👇</p>
+            <div class="options" id="opts6">
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">💻</span>"Do you have online ordering?"</button>
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">📄</span>"Send your catalog"</button>
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">⚡</span>"Can I reorder quickly?"</button>
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">🔍</span>"Are you on Google?"</button>
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">🛵</span>"Do you deliver?"</button>
+                <button class="opt-btn multi" onclick="toggleOpt(this,'s6')"><span class="opt-icon">💬</span>"What's your WhatsApp?"</button>
+            </div>
+            <button class="next-btn" id="next-s6" onclick="goTo('s7',6)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s5',5)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>-->
+
+    <!-- S7 — GROWTH DESIRE -->
+    <!--<section class="screen screen-top" id="s7">
+        <div class="screen-inner">
+            <div class="screen-step">Step 6 of 10</div>
+            <h2 class="screen-q">How serious are you about growing online?</h2>
+            <p class="screen-sub">No judgment — just be honest with yourself. 💪</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s7')"><span class="opt-icon">🤔</span>Just exploring</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s7')"><span class="opt-icon">📈</span>I want more customers</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s7')"><span class="opt-icon">🔄</span>I want repeat orders regularly</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s7')"><span class="opt-icon">🚀</span>I want my shop fully online</button>
+            </div>
+            <button class="next-btn" id="next-s7" onclick="goTo('s8',7)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s6',6)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>-->
+
+    <!-- S8 — EASE & FEAR -->
+    <!--<section class="screen screen-top" id="s8">
+        <div class="screen-inner">
+            <div class="screen-step">Step 7 of 10</div>
+            <h2 class="screen-q">What worries you about going online?</h2>
+            <p class="screen-sub">We've helped hundreds of shops overcome exactly this. 🤝</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">😰</span>Too complicated</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">💸</span>Too expensive</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">🤷</span>No technical knowledge</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">😵</span>Hard to manage orders</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">❓</span>Customers may not use it</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s8')"><span class="opt-icon">⏰</span>I don't have time</button>
+            </div>
+            <button class="next-btn" id="next-s8" onclick="goTo('s9',8)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s7',7)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>-->
+
+    <!-- S9 — PRODUCT COUNT -->
+    <!--<section class="screen screen-top" id="s9">
+        <div class="screen-inner">
+            <div class="screen-step">Step 8 of 10</div>
+            <h2 class="screen-q">How many products do you sell?</h2>
+            <p class="screen-sub">Even an estimate is great — we set everything up for you.</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s9')"><span class="opt-icon">🎯</span>Under 10</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s9')"><span class="opt-icon">📦</span>10–50</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s9')"><span class="opt-icon">🏪</span>50–200</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s9')"><span class="opt-icon">🏭</span>200+</button>
+            </div>
+            <button class="next-btn" id="next-s9" onclick="goTo('s10',9)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>
+            <div class="back-link" onclick="goTo('s8',8)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>-->
+
+    <!-- S10 — TRUST BUILDER -->
+    <section class="screen screen-top" id="s10">
+        <div class="screen-inner">
+            <div class="screen-step">Step 9 of 10</div>
+            <h2 class="screen-q">Customers scan a QR → instantly view your shop. Interested?</h2>
+            <p class="screen-sub">One scan. Whole shop. Orders in seconds. 📲</p>
+            <div class="options">
+                <button class="opt-btn" onclick="selectOpt(this,'s10')"><span class="opt-icon">🙌</span>Yes, definitely!</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s10')"><span class="opt-icon">👍</span>Sounds very useful</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s10')"><span class="opt-icon">🤔</span>Maybe</button>
+                <button class="opt-btn" onclick="selectOpt(this,'s10')"><span class="opt-icon">💭</span>Not sure yet</button>
+            </div>
+            <button class="next-btn" id="next-s10" onclick="startAnalysis()">Let's Start Analysis' <i class="fa-solid fa-arrow-right"></i></button>
+
+            <!--<button class="next-btn" id="next-s10" onclick="goTo('s11',10)" disabled>Continue <i class="fa-solid fa-arrow-right"></i></button>-->
+            <div class="back-link" onclick="goTo('s9',9)"><i class="fa-solid fa-arrow-left"></i> Back</div>
+        </div>
+    </section>
+
+    <!-- S11 — VISUALIZATION -->
+    <!--<section class="screen screen-center" id="s11">
+        <div class="screen-inner" style="max-width:420px;align-items:center;text-align:center;">
+            <div class="screen-step" style="justify-content:center;">Step 10 of 10</div>
+            <h2 class="screen-q">Imagine this for your shop... 🤩</h2>
+            <p class="screen-sub">This is what customers experience with a PieStore.</p>
+            <div class="viz-card">
+                <div class="viz-step">
+                    <div class="viz-step-icon">📲</div>
+                    <div class="viz-step-text">
+                        <strong>Customer scans your QR</strong>
+                        <span>From your bill, WhatsApp, or table</span>
+                    </div>
+                </div>
+                <div class="viz-step">
+                    <div class="viz-step-icon">🛍️</div>
+                    <div class="viz-step-text">
+                        <strong>Browses your products</strong>
+                        <span>Clean catalogue, no confusion</span>
+                    </div>
+                </div>
+                <div class="viz-step">
+                    <div class="viz-step-icon">✅</div>
+                    <div class="viz-step-text">
+                        <strong>Reorders in seconds</strong>
+                        <span>No calls. No WhatsApp chaos.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="viz-badge"><span>🚀</span> Your business is ready for repeat online orders!</div>
+            <button class="next-btn" onclick="startAnalysis()" style="background:linear-gradient(135deg,var(--green),#16A34A);box-shadow:0 8px 28px rgba(34,197,94,0.25);">
+                See My Results <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </section>-->
+
+    <!-- S12 — ANALYSIS LOADER -->
+    <section class="screen screen-center" id="s12">
+        <div class="screen-inner" style="align-items:center;text-align:center;max-width:360px;">
+            <div class="loader-ring"></div>
+            <h2 class="screen-q">Building your business profile...</h2>
+            <p class="screen-sub" style="margin-bottom:24px;">Hang tight — just a moment.</p>
+            <div class="loader-texts">
+                <div class="loader-text" id="lt1">🏪 Analysing your business type...</div>
+                <div class="loader-text" id="lt2">🔄 Checking repeat customer potential...</div>
+                <div class="loader-text" id="lt3">🗺️ Calculating online visibility score...</div>
+                <div class="loader-text" id="lt4">⚡ Preparing your smart store setup...</div>
+            </div>
+            <div class="loader-progress-wrap"><div class="loader-fill" id="loaderFill"></div></div>
+        </div>
+    </section>
+
+    <!-- S13 — RESULTS -->
+    <section class="screen screen-top" id="s13">
+        <div class="screen-inner" style="max-width:440px;">
+            <div style="font-size:2.6rem;text-align:center;margin-bottom:10px;">🎉</div>
+            <h2 class="results-h">Your Business is analysed</h2>
+            <p class="results-sub">We analyzed your responses like a business consultant.</p>
+            <div class="insights-card">
+                <div class="insight-row"><div class="insight-check">✓</div>Strong repeat customer potential detected</div>
+                <div class="insight-row"><div class="insight-check">✓</div>High WhatsApp order dependency identified</div>
+                <div class="insight-row"><div class="insight-check">✓</div>Google visibility opportunity available</div>
+                <div class="insight-row"><div class="insight-check">✓</div>QR-based ordering can boost conversions</div>
+            </div>
+            <div class="rec-card">
+                <div class="rec-title">📊 Growth Insight</div>
+                <div class="rec-items"> 
+                    <div class="rec-item"><div class="rec-dot"></div>Customers prefer instant ordering over calls</div>
+                    <div class="rec-item"><div class="rec-dot"></div>Simple QR store increases repeat orders</div>
+                </div>
+            </div>
+            <button class="next-btn" onclick="goTo('s14_free',14)">
+                Book My Free Demo Website<i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         S14 — CTA / CONTACT  ← UPDATED
+    ══════════════════════════════════════ -->
+    <section class="screen screen-top" id="s14_free">
+        <div class="screen-inner" style="max-width:420px;">
+
+            <h2 class="cta-h">📞 Almost there — how do we reach you?</h2>
+            <p class="cta-sub">Fill in your details and we'll send your personalized growth plan within a few hours.</p>
+
+            <!-- CONTACT FIELDS -->
+            <div class="form-group">
+                <label class="form-label" for="inp-name">Your Name <span class="req">*</span></label>
+                <input class="form-input" id="inp-name" type="text" placeholder="e.g. Rahul Sharma"
+                       oninput="answers.name=this.value; checkContactForm()" autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="inp-phone">WhatsApp Number <span class="req">*</span></label>
+                <input class="form-input" id="inp-phone" type="tel" placeholder="e.g. 98765 43210"
+                       maxlength="15" oninput="answers.phone=this.value; checkContactForm()" autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="inp-email">Email Address <span style="color:var(--muted);font-weight:400;font-size:0.65rem;">(optional)</span></label>
+                <input class="form-input" id="inp-email" type="email" placeholder="e.g. rahul@gmail.com"
+                       oninput="answers.email=this.value" autocomplete="email" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="inp-instagram">
+                    Business Instagram Handle / Google My Business Profile
+                    <span style="color:var(--muted);font-weight:400;font-size:0.65rem;">
+                        (optional)
+                    </span>
+                </label>
+
+                <input class="form-input"
+                       id="inp-instagram"
+                       type="text"
+                       placeholder="@yourbusiness"
+                       oninput="answers.instagram=this.value"
+                       autocomplete="off" />
+
+
+            </div>
+            <!-- INSTAGRAM NUDGE -->
+            <div class="ig-nudge">
+                <div class="ig-nudge-text">
+                    <strong>⚡ Need instant expert help? Follow us and DM on Instagram</strong>
+
+                    <button class="ig-follow-btn" onclick="openInstagram()">
+                        <i class="fa-brands fa-instagram"></i> @pieba_poweryourbusiness
+                    </button>
+                </div>
+            </div>
+
+            <!-- WHAT YOU GET -->
+            <div class="rec-card" style="margin-bottom:6px;">
+                <div class="rec-title">What you get — free</div>
+                <div class="rec-items">
+                    <div class="rec-item"><div class="rec-dot"></div>Custom growth suggestions for your shop</div>
+                    <div class="rec-item"><div class="rec-dot"></div>Online ordering setup roadmap</div>
+                    <div class="rec-item"><div class="rec-dot"></div>WhatsApp business optimisation tips</div>
+                </div>
+            </div>
+
+            <button class="next-btn" id="contact-submit-btn"
+                    onclick="submitContact()" disabled>
+                Confirm Free Callback <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <div class="back-link" onclick="goTo('s13',13)">← Go Back</div>
+        </div>
+    </section>
+
+    <!-- S15 — PAYMENT (PAID) -->
+    <section class="screen screen-top" id="s15_paid">
+        <div class="screen-inner" style="max-width:420px;">
+            <div class="screen-step" style="color:var(--yellow);">⚡ Priority Support</div>
+            <h2 class="pay-headline">Talk to an Expert Today</h2>
+            <p class="pay-sub">Get a 30-minute priority consultation and a custom growth plan for your business.</p>
+            <div class="pay-card">
+                <div class="pay-price">₹100 <span>one-time</span></div>
+                <p class="pay-desc">Skip the queue and get instant personalized guidance from PieBA experts.</p>
+                <div class="pay-includes">
+                    <div class="pay-include"><div class="pay-dot"></div>Priority WhatsApp consultation</div>
+                    <div class="pay-include"><div class="pay-dot"></div>Business growth roadmap</div>
+                    <div class="pay-include"><div class="pay-dot"></div>Setup guidance for online ordering</div>
+                </div>
+            </div>
+            <button class="upi-btn" onclick="answers.leadType='paid'; openUPI();">
+                Pay ₹100 & Book Instant Call
+            </button>
+            <div class="skip-link" onclick="goTo('s14_free',14)">
+                Skip → I'll go with the free consultation
+            </div>
+        </div>
+    </section>
+
+    <!-- S16 — THANK YOU -->
+    <section class="screen screen-center" id="s16">
+        <div class="screen-inner" style="align-items:center;text-align:center;max-width:380px;">
+            <span class="ty-emoji">🎊</span>
+            <h2 class="ty-h">You're all set!</h2>
+            <p class="ty-sub" id="final-msg">Our team will contact you shortly with your personalized business growth plan.</p>
+            <div class="ty-card">
+                <div class="ty-step"><div class="ty-num">1</div>We analyse your responses</div>
+                <div class="ty-step"><div class="ty-num">2</div>We prepare your website demo</div>
+                <div class="ty-step"><div class="ty-num">3</div>We contact you on WhatsApp</div>
+                <div class="ty-step"><div class="ty-num">4</div>Your business goes online 🚀</div>
+            </div>
+            <button class="wa-btn" onclick="openWhatsApp()" style="max-width:380px;">
+                <i class="fa-brands fa-whatsapp"></i> Consult on Whatsapp Now !
+            </button>
+            <p style="color:var(--muted);font-size:0.8rem;margin-top:16px;">
+                Follow us: <a href="https://www.instagram.com/pieba_poweryourbusiness/" target="_blank"
+                              style="color:var(--pink);font-weight:700;text-decoration:none;">@pieba_poweryourbusiness</a>
+            </p>
+        </div>
+    </section>
+
+    <div id="toast"></div>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6CNZZ7W0K">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-H6CNZZ7W0K');
+    </script>
+    <script>
+        /* ════════════════════════════════════════
+           CONFIG
+        ════════════════════════════════════════ */
+        const CFG = {
+            SHEET_URL: 'https://script.google.com/macros/s/AKfycbyV-YgcbEiIR5YgrYjEn85KeVZSxhAOqWD_ZfM7NjtB3VnBGCg-Mri8tOzKH2PQrgoPuQ/exec',
+            SPREADSHEET_ID: '1Q1DucFsWPEaQ4tXiBTtSxLHgLHMWdkOxN6zu4PjdnwY',
+            WA_NUMBER: '919266978080',
+            WA_MSG: 'Hi PieBA! I just completed the business quiz and want to know how to get my shop online.',
+            IG_URL: 'https://www.instagram.com/pieba_poweryourbusiness/',
+            UPI_ID: 'pieba@upi',
+            UPI_NAME: 'PieBA Technologies',
+            UPI_AMT: '100',
+            TOTAL: 10
+        };
+
+        /* ════════════════════════════════════════
+           STATE
+        ════════════════════════════════════════ */
+        const answers = {
+            sessionId: 'PB_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6).toUpperCase(),
+            startedAt: new Date().toLocaleString('en-IN'),
+            name: '',
+            businessType: '', businessTypeOther: '',
+            sellingStyle: '', painPoint: '',
+            happiness: '', customerAsks: '',
+            growthDesire: '', biggestFear: '',
+            productCount: '', qrReaction: '',
+            phone: '', instagram: '', email: '',
+            leadType: 'free',
+            completedAt: '', completed: 'No',
+            lastScreenReached: '',
+            currentStep: 0,
+            lastScreenReached: '',
+            status: 'In Progress',
+
+            name: '',
+            phone: '',
+            email: '',
+            instagram: '',
+
+            leadType: '',
+            completedAt: ''
+        };
+
+        let currentScreen = 's1';
+
+        const answerMap = {
+            s2: 'businessType', s3: 'sellingStyle', s4: 'painPoint',
+            s5: 'happiness', s7: 'growthDesire', s8: 'biggestFear',
+            s9: 'productCount', s10: 'qrReaction'
+        };
+
+        /* ════════════════════════════════════════
+           NAVIGATION
+        ════════════════════════════════════════ */
+        function goTo(id, step) {
+            if (id === 's16') {
+
+                gtag('event', 'quiz_completed', {
+                    lead_type: answers.leadType,
+                    business_type: answers.businessType
+                });
+            }
+            gtag('event', 'quiz_step_view', {
+                step_id: id,
+                step_number: step
+            });
+
+            document
+                .querySelectorAll('.screen')
+                .forEach(s => s.classList.remove('active'));
+            console.log(id);
+            document
+                .getElementById(id)
+                .classList.add('active');
+
+            answers.currentStep = step;
+            answers.lastScreenReached = id;
+            answers.savedAt = new Date().toLocaleString('en-IN');
+
+            saveToSheet(false);
+        }
+
+        function startQuiz() {
+            answers.startedAt = new Date().toLocaleString('en-IN');
+            gtag('event', 'quiz_started', {
+                session_id: answers.sessionId
+            });
+            goTo('s2', 1);
+        }
+
+        /* ════════════════════════════════════════
+           OPTION SELECTION
+        ════════════════════════════════════════ */
+        function selectOpt(btn, screenId, isOther) {
+            const container = btn.parentElement;
+            container.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+
+            const field = answerMap[screenId];
+            if (field) answers[field] = btn.innerText.replace(/^[\s\S]{1,3}/, '').trim();
+
+            const otherInput = document.getElementById('other-input-' + screenId);
+            if (otherInput) {
+                otherInput.classList.toggle('visible', !!isOther);
+                if (!isOther) answers.businessTypeOther = '';
+            }
+
+            const nb = document.getElementById('next-' + screenId);
+            if (nb) nb.disabled = false;
+        }
+
+        function toggleOpt(btn) {
+            btn.classList.toggle('selected');
+            const selected = document.querySelectorAll('#opts6 .selected');
+            const texts = Array.from(selected).map(b =>
+                b.innerText.replace(/^["']?/, '').replace(/["']?\s*$/, '').trim()
+            );
+            answers.customerAsks = texts.join(' | ');
+            const nb = document.getElementById('next-s6');
+            if (nb) nb.disabled = texts.length === 0;
+        }
+
+        /* ════════════════════════════════════════
+           CONTACT FORM VALIDATION
+        ════════════════════════════════════════ */
+        function checkContactForm() {
+            const name = document.getElementById('inp-name').value.trim();
+            const phone = document.getElementById('inp-phone').value.trim();
+            const btn = document.getElementById('contact-submit-btn');
+            // Name must be at least 2 chars, phone at least 7 digits
+            btn.disabled = !(name.length >= 2 && phone.replace(/\D/g, '').length >= 7);
+        }
+
+        function submitContact() {
+            gtag('event', 'lead_submitted', {
+                lead_type: 'quiz',
+                business_type: answers.businessType,
+                growth_desire: answers.growthDesire
+            });
+
+            answers.status = "Consultation Requested";
+            answers.completed = "Yes";
+            answers.completedAt = new Date().toLocaleString('en-IN');
+
+            saveToSheet(true);
+
+            goTo('s16', 16);
+        }
+
+        /* ════════════════════════════════════════
+           ANALYSIS LOADER
+        ════════════════════════════════════════ */
+        function startAnalysis() {
+            goTo('s12', 11);
+            const ids = ['lt1', 'lt2', 'lt3', 'lt4'];
+            const fill = document.getElementById('loaderFill');
+            let i = 0;
+            function next() {
+                if (i > 0) {
+                    const prev = document.getElementById(ids[i - 1]);
+                    prev.classList.remove('active');
+                    prev.classList.add('done');
+                    prev.textContent = '✓ ' + prev.textContent.replace(/^[^\s]+\s/, '');
+                }
+                if (i < ids.length) {
+                    document.getElementById(ids[i]).classList.add('active');
+                    fill.style.width = ((i + 1) / ids.length * 100) + '%';
+                    i++;
+                    setTimeout(next, 1050);
+                } else {
+                    setTimeout(() => goTo('s13', 12), 600);
+                }
+            }
+            next();
+        }
+
+        /* ════════════════════════════════════════
+           GOOGLE SHEETS — SEND DATA
+        ════════════════════════════════════════ */
+        function saveToSheet(isFinal) {
+            const payload = {
+                ...answers,
+                savedAt: new Date().toLocaleString('en-IN'),
+                completed: isFinal ? 'Yes' : 'No'
+            };
+            fetch(CFG.SHEET_URL, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(payload)
+            });
+        }
+
+        /* ════════════════════════════════════════
+           UPI / PAYMENT
+        ════════════════════════════════════════ */
+        function openUPI() {
+            const link = `upi://pay?pa=${CFG.UPI_ID}&pn=${encodeURIComponent(CFG.UPI_NAME)}&am=${CFG.UPI_AMT}&cu=INR&tn=${encodeURIComponent('PieBA Consultation')}`;
+            window.location.href = link;
+            setTimeout(() => {
+                showToast('✅ After payment, send screenshot on WhatsApp!');
+                setTimeout(() => goTo('s16', 16), 2200);
+            }, 1400);
+        }
+        function copyUPI() {
+            navigator.clipboard.writeText(CFG.UPI_ID)
+                .then(() => showToast('✅ UPI ID copied!'))
+                .catch(() => showToast('UPI: ' + CFG.UPI_ID));
+        }
+
+        /* ════════════════════════════════════════
+           SOCIAL
+        ════════════════════════════════════════ */
+        function openWhatsApp() {
+            gtag('event', 'whatsapp_click', {
+                source: 'quiz_thank_you'
+            });
+            // Prefill name + business type in WhatsApp message if available
+            const name = answers.name ? ` My name is ${answers.name}.` : '';
+            const biz = answers.businessType ? ` I run a ${answers.businessType}.` : '';
+            const msg = `Hi PieBA! I just completed the business quiz.${name}${biz} Please share my free growth plan!`;
+            window.open(`https://wa.me/${CFG.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        function openInstagram() {
+            gtag('event', 'openInstagram', {
+                source: 'quiz'
+            });
+
+            window.open(CFG.IG_URL, '_blank');
+        }
+
+        /* ════════════════════════════════════════
+           TOAST
+        ════════════════════════════════════════ */
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════════════════
+    ║  GOOGLE APPS SCRIPT — paste into script.google.com
+    ║
+    ║  Add 'name' to the HEADERS array and the row mapping:
+    ║
+    ║  const HEADERS = [
+    ║    'Session ID','Started At','Saved At','Last Screen',
+    ║    'Name',                              ← ADD THIS
+    ║    'Business Type','Business Type (Other)','Selling Style',
+    ║    'Pain Point','Happiness Goal','Customer Asks',
+    ║    'Growth Desire','Biggest Fear','Product Count','QR Reaction',
+    ║    'Phone','Instagram','Email','Lead Type',
+    ║    'Completed At','Completed?'
+    ║  ];
+    ║
+    ║  var row = [
+    ║    d.sessionId, d.startedAt, d.savedAt, d.lastScreenReached,
+    ║    d.name,                              ← ADD THIS
+    ║    d.businessType, d.businessTypeOther, d.sellingStyle,
+    ║    d.painPoint, d.happiness, d.customerAsks,
+    ║    d.growthDesire, d.biggestFear, d.productCount, d.qrReaction,
+    ║    d.phone, d.instagram, d.email, d.leadType,
+    ║    d.completedAt, d.completed
+    ║  ];
+    ╚══════════════════════════════════════════════════════════════════════════
+    -->
+</body>
+</html>
